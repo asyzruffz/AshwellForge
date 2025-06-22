@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiveStreamingServerNet" Version="0.31.0" />
+    <PackageReference Include="LiveStreamingServerNet.AdminPanelUI" Version="0.31.0" />
+    <PackageReference Include="LiveStreamingServerNet.Flv" Version="0.31.0" />
+    <PackageReference Include="LiveStreamingServerNet.Standalone" Version="0.31.0" />
+  </ItemGroup>
+
+</Project>
