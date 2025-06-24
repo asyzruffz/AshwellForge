@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshwellForge.Server", "Ashw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshwellForge.Mechanism", "AshwellForge.Mechanism\AshwellForge.Mechanism.csproj", "{CA77EEB4-ACF2-47AC-AE92-645895304E3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshwellForge.Admin", "AshwellForge.Admin\AshwellForge.Admin.csproj", "{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CA77EEB4-ACF2-47AC-AE92-645895304E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA77EEB4-ACF2-47AC-AE92-645895304E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA77EEB4-ACF2-47AC-AE92-645895304E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

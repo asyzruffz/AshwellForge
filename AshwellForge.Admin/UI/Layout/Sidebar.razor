@@ -1,0 +1,19 @@
+﻿<MudContainer Class="d-flex flex-column flex-grow-1 align-start pa-4 gap-2">
+	<MudPaper Class="flex-grow-1" Width="100%" Elevation="0">
+		<MudNavMenu Color="Color.Primary">
+			<MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard">Overview</MudNavLink>
+			<MudNavLink Href="/streams" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ScreenshotMonitor">Streams</MudNavLink>
+		</MudNavMenu>
+	</MudPaper>
+	<ColorSchemeToggle OnSetDarkMode=@SetDarkMode />
+</MudContainer>
+
+@code {
+	[Parameter]
+	public EventCallback<bool> OnSetDarkMode { get; set; }
+	
+	void SetDarkMode(bool enabled)
+	{
+		OnSetDarkMode.InvokeAsync(enabled);
+	}
+}

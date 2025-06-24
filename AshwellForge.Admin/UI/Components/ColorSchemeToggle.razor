@@ -1,0 +1,18 @@
+﻿<MudToggleIconButton Toggled="IsToDarkMode"
+                     ToggledChanged="OnToggledChanged"
+                     Icon="@Icons.Material.Filled.LightMode"
+                     ToggledIcon="@Icons.Material.Filled.DarkMode"
+                     title="@(IsToDarkMode ? "Dark" : "Light")" />
+
+@code {
+    [Parameter]
+    public EventCallback<bool> OnSetDarkMode { get; set; }
+
+    bool IsToDarkMode { get; set; }
+
+    void OnToggledChanged(bool toggled)
+    {
+        IsToDarkMode = toggled;
+        OnSetDarkMode.InvokeAsync(!toggled);
+    }
+}
