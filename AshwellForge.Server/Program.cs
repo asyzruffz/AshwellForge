@@ -1,5 +1,6 @@
+using AshwellForge.Mechanism;
+using AshwellForge.Mechanism.Admin;
 using LiveStreamingServerNet;
-using LiveStreamingServerNet.AdminPanelUI;
 using LiveStreamingServerNet.Flv.Installer;
 using LiveStreamingServerNet.Standalone;
 using LiveStreamingServerNet.Standalone.Installer;
@@ -16,6 +17,6 @@ var app = builder.Build();
 
 app.UseHttpFlv();
 app.MapStandaloneServerApiEndPoints();
-app.UseAdminPanelUI(new AdminPanelUIOptions { BasePath = "/ui", HasHttpFlvPreview = true });
+app.UseAdminPanelUI(new AdminOptions { BasePath = "/ui", HasHttpFlvPreview = true });
 
 app.Run();
