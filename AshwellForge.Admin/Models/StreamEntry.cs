@@ -2,14 +2,14 @@
 
 public record StreamEntry(
     string StreamPath,
+    string StartTime,
+    int Subscribers,
     string Resolution,
-    string Framerate,
+    int Framerate,
     string VideoCodec,
     string AudioCodec,
-    string SampleRate,
-    string Channels,
-    string Subscribers,
-    string StartTime)
+    int SampleRate,
+    int Channels)
 {
-    public static StreamEntry Empty() => new StreamEntry(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+    public static StreamEntry Empty() => new StreamEntry(string.Empty, string.Empty, 0, string.Empty, 0, string.Empty, string.Empty, 0, 0);
 }
