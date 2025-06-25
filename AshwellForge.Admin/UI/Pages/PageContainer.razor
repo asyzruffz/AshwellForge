@@ -1,0 +1,14 @@
+﻿<MudContainer Class="pt-2 pb-8" MaxWidth="MaxWidth.Medium">
+    <PageTitle>Ashwell Forge - @Title</PageTitle>
+    <MudText Typo="Typo.h4" Class="mb-4">@Title</MudText>
+
+    @PageContent
+</MudContainer>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment PageContent { get; set; } = default!;
+}
