@@ -1,13 +1,13 @@
 ﻿@using AshwellForge.Admin.Models;
 
 <MudDataGrid T="StreamEntry" Items="@Entries" SortMode="SortMode.Single" Filterable="false" QuickFilter="@_quickFilter"
-             Dense="true" ColumnResizeMode="ResizeMode.Column"
+             Dense="true" ColumnResizeMode="ResizeMode.Column" Loading="_loading" LoadingProgressColor="Color.Primary"
              RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
     <ToolBarContent>
         <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         <MudSpacer />
-        <MudIconButton Class="ml-2" Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" />
+        <MudIconButton Class="ml-2" Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" OnClick="@((e) => Refresh())" />
     </ToolBarContent>
     <Columns>
         <PropertyColumn Property="x => x.StreamPath" />
@@ -15,14 +15,24 @@
         <PropertyColumn Property="x => x.Subscribers" SortBy="@_sortBy" />
         <PropertyColumn Property="x => x.Resolution" Sortable="false" />
         <PropertyColumn Property="x => x.Framerate" />
-        <PropertyColumn Property="x => x.Channels" />
+        <PropertyColumn Property="x => x.Channels" Sortable="false" />
         <PropertyColumn Property="x => x.VideoCodec" Title="Video Codec" Sortable="false" />
         <PropertyColumn Property="x => x.AudioCodec" Title="Audio Codec" Sortable="false" />
         <PropertyColumn Property="x => x.SampleRate" Title="Sample Rate" Sortable="false" />
+        <TemplateColumn Resizable="false">
+            <CellTemplate>
+                <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Size="@Size.Small" />
+            </CellTemplate>
+        </TemplateColumn>
     </Columns>
     <PagerContent>
         <!--<MudDataGridPager T="StreamEntry" />-->
-        <MudPaper Class="py-4"></MudPaper>
+        <MudPaper Class="py-4">
+            @if (!Entries.Any())
+            {
+                <MudText Align="Align.Center">No stream available</MudText>
+            }
+        </MudPaper>
     </PagerContent>
 </MudDataGrid>
 
@@ -30,6 +40,7 @@
     IEnumerable<StreamEntry> Entries = new List<StreamEntry>();
     string _searchString = string.Empty;
     List<string> _events = new();
+    bool _loading = false;
 
     // custom sort by name length
     Func<StreamEntry, object> _sortBy => x =>
@@ -55,10 +66,19 @@
         return false;
     };
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        await Refresh();
+    }
+
+    async Task Refresh()
+    {
+        _loading = true;
         //Entries = await httpClient.GetFromJsonAsync<List<StreamEntry>>("webapi/periodictable");
-        return Task.CompletedTask;
+        await Task.Delay(600);
+        ((List<StreamEntry>)Entries).Clear();
+        ((List<StreamEntry>)Entries).Add(new StreamEntry(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty));
+        _loading = false;
     }
 
     // events
