@@ -1,10 +1,11 @@
 ﻿@using AshwellForge.Admin.Models;
+@using AshwellForge.Admin.Services;
 
-<MudDataGrid T="StreamEntry" Items="@Entries" SortMode="SortMode.Single" Filterable="false" QuickFilter="@_quickFilter"
-             Dense="true" ColumnResizeMode="ResizeMode.Column" Loading="_loading" LoadingProgressColor="Color.Primary"
+<MudDataGrid T="StreamEntry" Items="@Entries" SortMode="SortMode.Single" Filterable="false" QuickFilter="@quickFilter"
+             Dense="true" ColumnResizeMode="ResizeMode.Column" Loading="loading" LoadingProgressColor="Color.Primary"
              RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
     <ToolBarContent>
-        <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         <MudSpacer />
         <MudIconButton Class="ml-2" Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" OnClick="@((e) => Refresh())" />
@@ -12,7 +13,7 @@
     <Columns>
         <PropertyColumn Property="x => x.StreamPath" />
         <PropertyColumn Property="x => x.StartTime" />
-        <PropertyColumn Property="x => x.Subscribers" SortBy="@_sortBy" />
+        <PropertyColumn Property="x => x.Subscribers" SortBy="@sortBySubscribers" />
         <PropertyColumn Property="x => x.Resolution" Sortable="false" />
         <PropertyColumn Property="x => x.Framerate" />
         <PropertyColumn Property="x => x.Channels" Sortable="false" />
@@ -37,27 +38,29 @@
 </MudDataGrid>
 
 @code {
-    IEnumerable<StreamEntry> Entries = new List<StreamEntry>();
-    string _searchString = string.Empty;
-    List<string> _events = new();
-    bool _loading = false;
+    [Inject]
+    StreamsApi api { get; set; } = default!;
 
-    // custom sort by name length
-    Func<StreamEntry, object> _sortBy => x =>
+    IEnumerable<StreamEntry> Entries = new List<StreamEntry>();
+    string searchString = string.Empty;
+    List<string> events = new();
+    bool loading = false;
+
+    Func<StreamEntry, object> sortBySubscribers => x =>
     {
         return x.Subscribers;
     };
 
     // quick filter - filter globally across multiple columns with the same input
-    Func<StreamEntry, bool> _quickFilter => x =>
+    Func<StreamEntry, bool> quickFilter => x =>
     {
-        if (string.IsNullOrWhiteSpace(_searchString))
+        if (string.IsNullOrWhiteSpace(searchString))
             return true;
 
-        if (x.StreamPath.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        if (x.StreamPath.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
-        if (x.Resolution.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        if (x.Resolution.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
         //if ($"{x.Number} {x.Position} {x.Molar}".Contains(_searchString))
@@ -73,12 +76,9 @@
 
     async Task Refresh()
     {
-        _loading = true;
-        //Entries = await httpClient.GetFromJsonAsync<List<StreamEntry>>("webapi/periodictable");
-        await Task.Delay(600);
-        ((List<StreamEntry>)Entries).Clear();
-        ((List<StreamEntry>)Entries).Add(new StreamEntry(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty));
-        _loading = false;
+        loading = true;
+        Entries = await api.GetStreams();
+        loading = false;
     }
 
     // events

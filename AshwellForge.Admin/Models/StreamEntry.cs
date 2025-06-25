@@ -9,4 +9,7 @@ public record StreamEntry(
     string SampleRate,
     string Channels,
     string Subscribers,
-    string StartTime);
+    string StartTime)
+{
+    public static StreamEntry Empty() => new StreamEntry(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+}
