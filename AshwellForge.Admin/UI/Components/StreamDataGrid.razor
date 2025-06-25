@@ -1,0 +1,79 @@
+﻿@using AshwellForge.Admin.Models;
+
+<MudDataGrid T="StreamEntry" Items="@Entries" SortMode="SortMode.Single" Filterable="false" QuickFilter="@_quickFilter"
+             Dense="true" ColumnResizeMode="ResizeMode.Column"
+             RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
+    <ToolBarContent>
+        <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudSpacer />
+        <MudIconButton Class="ml-2" Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" />
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="x => x.StreamPath" />
+        <PropertyColumn Property="x => x.StartTime" />
+        <PropertyColumn Property="x => x.Subscribers" SortBy="@_sortBy" />
+        <PropertyColumn Property="x => x.Resolution" Sortable="false" />
+        <PropertyColumn Property="x => x.Framerate" />
+        <PropertyColumn Property="x => x.Channels"" />
+        <PropertyColumn Property="x => x.VideoCodec" Title="Video Codec" Sortable="false" />
+        <PropertyColumn Property="x => x.AudioCodec" Title="Audio Codec" Sortable="false" />
+        <PropertyColumn Property="x => x.SampleRate" Title="Sample Rate" Sortable="false" />
+    </Columns>
+    <PagerContent>
+        <!--<MudDataGridPager T="StreamEntry" />-->
+        <MudPaper Class="py-4"></MudPaper>
+    </PagerContent>
+</MudDataGrid>
+
+@code {
+    IEnumerable<StreamEntry> Entries = new List<StreamEntry>();
+    string _searchString = string.Empty;
+    List<string> _events = new();
+
+    // custom sort by name length
+    Func<StreamEntry, object> _sortBy => x =>
+    {
+        return x.Subscribers;
+    };
+
+    // quick filter - filter globally across multiple columns with the same input
+    Func<StreamEntry, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.StreamPath.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Resolution.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        //if ($"{x.Number} {x.Position} {x.Molar}".Contains(_searchString))
+        //    return true;
+
+        return false;
+    };
+
+    protected override Task OnInitializedAsync()
+    {
+        //Entries = await httpClient.GetFromJsonAsync<List<StreamEntry>>("webapi/periodictable");
+        return Task.CompletedTask;
+    }
+
+    // events
+    void RowClicked(DataGridRowClickEventArgs<StreamEntry> args)
+    {
+        //_events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<StreamEntry> args)
+    {
+        //_events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<StreamEntry> items)
+    {
+        //_events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+}
