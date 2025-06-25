@@ -2,7 +2,9 @@
                      ToggledChanged="OnToggledChanged"
                      Icon="@Icons.Material.Filled.LightMode"
                      ToggledIcon="@Icons.Material.Filled.DarkMode"
-                     title="@(IsToDarkMode ? "Dark" : "Light")" />
+                     Variant="Variant.Outlined"
+                     title="@(IsToDarkMode ? "Dark" : "Light")"
+                     Color="Color.Primary" />
 
 @code {
     [Parameter]
