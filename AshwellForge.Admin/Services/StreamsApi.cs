@@ -17,9 +17,8 @@ public class StreamsApi
     public async Task<IEnumerable<StreamEntry>> GetStreams()
     {
         var requestParams = new GetStreamsParam(1, 20, null);
-        Console.WriteLine($"URI: {client.BaseAddress?.ToString()}");
 
-        var response = await client.GetAsync(requestParams.IncludeToUri("/api/v1/streams"));
+        var response = await PerformRequest(requestParams.IncludeToUri("/api/v1/streams"));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -29,6 +28,7 @@ public class StreamsApi
         var streamsResponse = await response.Content.ReadFromJsonAsync<GetStreamsResponse>();
         if (streamsResponse is null)
         {
+            Console.WriteLine("GetStreamsResponse cannot be made from json");
             return Enumerable.Empty<StreamEntry>();
         }
 
@@ -58,5 +58,18 @@ public class StreamsApi
             stream.AudioCodecId.ToString(),
             stream.AudioSampleRate,
             stream.AudioChannels));
+    }
+
+    async Task<HttpResponseMessage> PerformRequest(string uri)
+    {
+        try
+        {
+            return await client.GetAsync(uri);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Fail to get streams");
+            return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+        }
     }
 }
