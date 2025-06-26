@@ -8,12 +8,21 @@ using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+    options.AddPolicy("origins",
+    policy => policy
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()));
+
 builder.Services.AddLiveStreamingServer(
     new IPEndPoint(IPAddress.Any, 1935),
     options => options.AddStandaloneServices().AddFlv()
 );
 
 var app = builder.Build();
+
+app.UseCors("origins");
 
 app.UseHttpFlv();
 app.MapStandaloneServerApiEndPoints();

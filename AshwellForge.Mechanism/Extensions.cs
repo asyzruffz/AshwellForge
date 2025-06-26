@@ -2,9 +2,6 @@
 
 namespace AshwellForge.Mechanism;
 
-/// <summary>
-/// Contains extension methods for WebApplication configurations
-/// </summary>
 public static class Extensions
 {
     /// <summary>
