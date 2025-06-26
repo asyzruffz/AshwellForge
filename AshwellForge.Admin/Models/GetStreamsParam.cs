@@ -4,7 +4,7 @@ namespace AshwellForge.Admin.Models;
 
 public record GetStreamsParam(int Page, int PageSize, string? Filter)
 {
-    public string IncludeToUri(string Uri)
+    public string AppendToUri(string Uri)
     {
         var query = HttpUtility.ParseQueryString(string.Empty);
         query["page"] = Page.ToString();
