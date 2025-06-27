@@ -13,8 +13,8 @@ public record StreamEntry(
     int Channels)
 {
     public static StreamEntry Empty() => new StreamEntry(
-        "...", 0, string.Empty, 0, "0x0", 0,
-        string.Empty, string.Empty, 0, 0);
+        "...", 0, "00:00", 0, "0x0", 0,
+        "Unknown", "Unknown", 0, 0);
 
     public static StreamEntry From(VideoStream stream) => new StreamEntry(
         stream!.StreamPath,
@@ -23,8 +23,8 @@ public record StreamEntry(
         stream.SubscribersCount,
         $"{stream.Width}x{stream.Height}",
         stream.Framerate,
-        stream.VideoCodecId.ToString(),
-        stream.AudioCodecId.ToString(),
+        ((VideoCodec)stream.VideoCodecId).ToName(),
+        ((AudioCodec)stream.AudioCodecId).ToName(),
         stream.AudioSampleRate,
         stream.AudioChannels);
 }
