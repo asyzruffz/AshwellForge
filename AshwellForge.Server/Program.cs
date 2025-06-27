@@ -22,7 +22,10 @@ builder.Services.AddLiveStreamingServer(
 
 var app = builder.Build();
 
-app.UseCors("origins");
+if (app.Environment.IsDevelopment())
+{
+    app.UseCors("origins");
+}
 
 app.UseHttpFlv();
 app.MapStandaloneServerApiEndPoints();

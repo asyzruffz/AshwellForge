@@ -23,7 +23,8 @@ public class StreamsApi
         if (!response.IsSuccessStatusCode)
         {
             Console.WriteLine("Fail to get streams");
-            return Enumerable.Empty<StreamEntry>();
+            return [StreamEntry.Empty()];
+            //return Enumerable.Empty<StreamEntry>();
         }
 
         var streamsResponse = await response.Content.ReadFromJsonAsync<GetStreamsResponse>();
@@ -34,16 +35,6 @@ public class StreamsApi
         }
 
         return streamsResponse.Streams
-            .Where(s => s is not null)
-            .Select(stream => new StreamEntry(
-            stream!.StreamPath,
-            stream.StartTime.ToShortTimeString(),
-            stream.SubscribersCount,
-            $"{stream.Width}x{stream.Height}",
-            stream.Framerate,
-            stream.VideoCodecId.ToString(),
-            stream.AudioCodecId.ToString(),
-            stream.AudioSampleRate,
-            stream.AudioChannels));
+            .Select(StreamEntry.From);
     }
 }

@@ -2,6 +2,13 @@
 
 <PageContainer Title="Streams">
     <PageContent>
-        <StreamDataGrid />
+        <StreamDataGrid OnOpenPreview=@OpenPreview />
     </PageContent>
 </PageContainer>
+
+@code {
+    void OpenPreview(int streamId)
+    {
+        Console.WriteLine($"Previewing - {streamId}");
+    }
+}

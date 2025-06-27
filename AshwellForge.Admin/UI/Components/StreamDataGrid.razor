@@ -11,18 +11,26 @@
         <MudIconButton Class="ml-2" Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" OnClick="@((e) => Refresh())" />
     </ToolBarContent>
     <Columns>
-        <PropertyColumn Property="x => x.StreamPath" />
+        <TemplateColumn Title="Stream Path" Resizable="true">
+            <CellTemplate>
+                <MudText Typo="Typo.body1">@context.Item.StreamPath</MudText>
+                <MudText Typo="Typo.caption">Client id: @context.Item.ClientId</MudText>
+            </CellTemplate>
+        </TemplateColumn>
         <PropertyColumn Property="x => x.StartTime" />
         <PropertyColumn Property="x => x.Subscribers" SortBy="@sortBySubscribers" />
         <PropertyColumn Property="x => x.Resolution" Sortable="false" />
-        <PropertyColumn Property="x => x.Framerate" />
+        <PropertyColumn Property="x => x.Framerate" Sortable="false" />
         <PropertyColumn Property="x => x.VideoCodec" Title="Video Codec" Sortable="false" />
         <PropertyColumn Property="x => x.AudioCodec" Title="Audio Codec" Sortable="false" />
         <PropertyColumn Property="x => x.SampleRate" Title="Sample Rate" Sortable="false" />
         <PropertyColumn Property="x => x.Channels" Sortable="false" />
         <TemplateColumn Resizable="false">
             <CellTemplate>
-                <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Size="@Size.Small" />
+                <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+                         AriaLabel="Open stream menu">
+                    <MudMenuItem Label="Preview" OnClick="@((e) => OnOpenPreview.InvokeAsync(context.Item.ClientId))" />
+                </MudMenu>
             </CellTemplate>
         </TemplateColumn>
     </Columns>
@@ -40,6 +48,9 @@
 @code {
     [Inject]
     StreamsApi api { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<int> OnOpenPreview { get; set; }
 
     IEnumerable<StreamEntry> Entries = new List<StreamEntry>();
     string searchString = string.Empty;
