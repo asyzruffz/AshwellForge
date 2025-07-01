@@ -4,7 +4,7 @@ using AshwellForge.Mechanism.Admin;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
-    options.AddPolicy("origins",
+    options.AddPolicy("Development",
     policy => policy
         .AllowAnyOrigin()
         .AllowAnyHeader()
@@ -13,10 +13,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddLiveStreamServer(1935);
 
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors("origins");
+    app.UseCors("Development");
 }
 
 app.UseFlv();
