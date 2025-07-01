@@ -17,7 +17,7 @@ public static class Extensions
     public static IServiceCollection AddLiveStreamServer(this IServiceCollection services, int port)
     {
         services.AddLiveStreamingServer(
-            new IPEndPoint(IPAddress.Any, 1935),
+            new IPEndPoint(IPAddress.Any, port),
             options =>
             {
                 options.Services.AddSingleton<RtmpStreamManagerApiService>();
