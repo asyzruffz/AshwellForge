@@ -1,4 +1,6 @@
-﻿namespace AshwellForge.Mechanism.Admin;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace AshwellForge.Mechanism.Admin;
 
 public class AdminMiddleware
 {
