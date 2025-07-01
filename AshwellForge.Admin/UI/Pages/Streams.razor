@@ -1,4 +1,5 @@
 ﻿@page "/streams"
+@inject NavigationManager NavigationManager
 
 <PageContainer Title="Streams">
     <PageContent>
@@ -10,5 +11,6 @@
     void OpenPreview(int streamId)
     {
         Console.WriteLine($"Previewing - {streamId}");
+        NavigationManager.NavigateTo("/streams/" + streamId);
     }
 }
