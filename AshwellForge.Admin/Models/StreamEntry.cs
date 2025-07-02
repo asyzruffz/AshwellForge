@@ -13,7 +13,7 @@ public record StreamEntry(
     int Channels)
 {
     public static StreamEntry Empty() => new StreamEntry(
-        "...", 0, "00:00", 0, "0x0", 0,
+        "/empty/none", 0, "00:00", 0, "0x0", 0,
         "Unknown", "Unknown", 0, 0);
 
     public static StreamEntry From(VideoStream stream) => new StreamEntry(

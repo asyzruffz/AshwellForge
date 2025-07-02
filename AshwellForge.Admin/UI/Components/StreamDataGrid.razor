@@ -29,7 +29,7 @@
             <CellTemplate>
                 <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
                          AriaLabel="Open stream menu">
-                    <MudMenuItem Label="Preview" OnClick="@((e) => OnOpenPreview.InvokeAsync(context.Item.ClientId))" />
+                    <MudMenuItem Label="Preview" OnClick="@((e) => OnOpenPreview.InvokeAsync(context.Item.StreamPath))" />
                 </MudMenu>
             </CellTemplate>
         </TemplateColumn>
@@ -50,7 +50,7 @@
     StreamsApi api { get; set; } = default!;
 
     [Parameter]
-    public EventCallback<int> OnOpenPreview { get; set; }
+    public EventCallback<string> OnOpenPreview { get; set; }
 
     IEnumerable<StreamEntry> Entries = new List<StreamEntry>();
     string searchString = string.Empty;

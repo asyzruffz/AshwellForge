@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using AshwellForge.Admin.Utils;
+using System.Web;
 
 namespace AshwellForge.Admin.Models;
 
@@ -6,10 +7,11 @@ public record GetStreamsParam(int Page, int PageSize, string? Filter)
 {
     public string AppendToUri(string Uri)
     {
-        var query = HttpUtility.ParseQueryString(string.Empty);
-        query["page"] = Page.ToString();
-        query["pageSize"] = PageSize.ToString();
-        if (!string.IsNullOrEmpty(Filter)) query["filter"] = Filter;
-        return $"{Uri}?{query.ToString()}";
+        var query = UrlQueryString.Create()
+            .Set("page", Page.ToString())
+            .Set("pageSize", PageSize.ToString());
+        if (!string.IsNullOrEmpty(Filter))
+            query.Set("filter", Filter);
+        return $"{Uri}{query.Build()}";
     }
 }

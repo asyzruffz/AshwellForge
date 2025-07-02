@@ -1,11 +1,25 @@
-﻿@page "/streams/{StreamId}"
+﻿@page "/streams/preview"
+@using AshwellForge.Admin.Utils
+@inject NavigationManager NavigationManager
 
 <PageContainer Title="Stream Preview">
     <PageContent>
+        <MudPaper Width="100%">
+            <StreamVideoPlayer Url="@StreamUrl" />
+        </MudPaper>
     </PageContent>
 </PageContainer>
 
 @code {
-    [Parameter]
-    public string StreamId { get; set; } = string.Empty;
+    public string? StreamPath { get; set; }
+
+    public string StreamUrl => $"{NavigationManager.BaseUri}{StreamPath}.flv";
+
+    protected override void OnParametersSet()
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        var parameters = UrlQueryString.From(uri.Query);
+
+        StreamPath = parameters.Get("StreamPath");
+    }
 }
