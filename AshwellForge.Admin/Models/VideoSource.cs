@@ -1,11 +1,11 @@
 ﻿using BlazorVideoPlayer;
-using System;
 
 namespace AshwellForge.Admin.Models;
 
 public record VideoSource(string Path, string Type)
 {
     public static VideoSource Flv(string Path) => new VideoSource(Path, "video/x-flv");
+    public static VideoSource Hls(string Path) => new VideoSource(Path, "application/x-mpegURL");
 }
 
 public static class VideoSourceExtension

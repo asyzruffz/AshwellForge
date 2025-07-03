@@ -18,7 +18,8 @@ if (app.Environment.IsDevelopment())
     app.UseCors("Development");
 }
 
-app.UseFlv();
+//app.UseFlv();
+app.UseHls();
 app.MapServerApiEndpoints();
 app.UseAdminPanelUI(new AdminOptions { BasePath = "/ui", HasHttpFlvPreview = true });
 

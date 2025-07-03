@@ -2,12 +2,17 @@
 using AshwellForge.Mechanism.Core;
 using AshwellForge.Mechanism.RtmpServer;
 using AshwellForge.Mechanism.RtmpServer.Dtos;
+using AshwellForge.Mechanism.RtmpServer.Hls;
 using AshwellForge.Mechanism.RtmpServer.Services;
 using LiveStreamingServerNet;
 using LiveStreamingServerNet.Flv.Installer;
+using LiveStreamingServerNet.Rtmp;
+using LiveStreamingServerNet.StreamProcessor.AspNetCore.Installer;
+using LiveStreamingServerNet.StreamProcessor.Installer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace AshwellForge.Mechanism;
@@ -21,7 +26,17 @@ public static class Extensions
             options =>
             {
                 options.Services.AddSingleton<RtmpStreamManagerApiService>();
-                options.AddFlv();
+                //options.AddFlv();
+
+                var outputDir = Path.Combine(Directory.GetCurrentDirectory(), "output");
+                new DirectoryInfo(outputDir).Create();
+                options.Configure(options => options.EnableGopCaching = false)
+                    .AddVideoCodecFilter(builder => builder.Include(VideoCodec.AVC).Include(VideoCodec.HEVC))
+                    .AddAudioCodecFilter(builder => builder.Include(AudioCodec.AAC))
+                    .AddStreamProcessor(options => 
+                        options.AddStreamProcessorEventHandler(svc =>
+                            new StreamProcessorEventListener(outputDir, svc.GetRequiredService<ILogger<StreamProcessorEventListener>>())))
+                    .AddHlsTransmuxer(options => options.Configure(config => config.OutputPathResolver = new HlsOutputPathResolver(outputDir)));
             });
 
         services.AddScoped<IOperationHandler<GetStreamsOperation, GetStreamsResponse>, GetStreamsOperationHandler>();
@@ -30,6 +45,7 @@ public static class Extensions
     }
 
     public static IApplicationBuilder UseFlv(this IApplicationBuilder app) => app.UseHttpFlv();
+    public static IApplicationBuilder UseHls(this IApplicationBuilder app) => app.UseHlsFiles();
 
     public static IEndpointRouteBuilder MapServerApiEndpoints(this IEndpointRouteBuilder builder) =>
         builder.MapStreamManagerApiEndpoints();
