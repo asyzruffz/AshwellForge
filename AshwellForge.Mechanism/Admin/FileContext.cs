@@ -5,14 +5,14 @@ namespace AshwellForge.Mechanism.Admin;
 
 internal struct FileContext
 {
-    private readonly AdminOptions _options;
+    private readonly AdminOptions options;
 
     public FileContext(AdminOptions options)
     {
         ArgumentNullException.ThrowIfNull(options.FileProvider);
         ArgumentNullException.ThrowIfNull(options.ContentTypeProvider);
 
-        _options = options;
+        this.options = options;
     }
 
     public async Task<bool> ServeAdminPanelUI(HttpContext context)
@@ -56,7 +56,7 @@ internal struct FileContext
 
     private async Task<bool> TryServeIndex(HttpContext context)
     {
-        if (_options.BasePath != "/" && !context.Request.Path.StartsWithSegments(_options.BasePath))
+        if (options.BasePath != "/" && !context.Request.Path.StartsWithSegments(options.BasePath))
             return false;
 
         return await TryServeFile(context, "/index.html");
@@ -64,10 +64,10 @@ internal struct FileContext
 
     private async Task<bool> TryServeFile(HttpContext context, PathString subPath)
     {
-        if (!_options.ContentTypeProvider!.TryGetContentType(subPath, out var contentType))
+        if (!options.ContentTypeProvider!.TryGetContentType(subPath, out var contentType))
             return false;
 
-        var fileInfo = _options.FileProvider!.GetFileInfo(subPath);
+        var fileInfo = options.FileProvider!.GetFileInfo(subPath);
 
         if (!fileInfo.Exists)
             return false;
@@ -85,7 +85,7 @@ internal struct FileContext
 
         builder.Append("window._env = {");
 
-        foreach (var (key, value) in _options.GetParameters())
+        foreach (var (key, value) in options.GetParameters())
         {
             switch (value)
             {
