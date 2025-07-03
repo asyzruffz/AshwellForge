@@ -1,8 +1,9 @@
 ﻿@using AshwellForge.Admin.Models
 @using BlazorVideoPlayer
+@inject IJSRuntime JSRuntime
 
 <MudContainer class="rounded" Gutters="false">
-    <Player id="advanced"
+    <Player id="@videoId"
             CurrentTimeControl="true"
             DurationControl="true"
             FullscreenControl="true"
@@ -16,7 +17,6 @@
             PlayLargeControl="true"
             Quality="true"
             Speed="true"
-            Poster="poster.png"
             Sources="@sources"
             OnEndedVideo="OnEndedVideo"
             OnPlayVideo="OnPlayVideo"
@@ -28,12 +28,21 @@
     public VideoSource? Source { get; set; }
 
     List<Source> sources = new();
+    readonly string videoId = $"video-player-{Guid.NewGuid():N}";
 
     protected override void OnInitialized()
     {
         if (Source is not null)
         {
-            sources.Add(Source.ToBVPSource());
+            //sources.Add(Source.ToBVPSource());
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !string.IsNullOrWhiteSpace(Source?.Path))
+        {
+            await JSRuntime.InvokeVoidAsync("mpegtsInterop.initialize", videoId, Source.Path);
         }
     }
 
@@ -42,14 +51,19 @@
         Console.WriteLine("End of play");
     }
 
-    void OnPlayVideo()
+    async Task OnPlayVideo()
     {
-        Console.WriteLine("Start playing");
+        await JSRuntime.InvokeVoidAsync("mpegtsInterop.play");
     }
 
     void OnVideoTimeUpdate(float currentTime, float duration)
     {
         Console.WriteLine("Current Time: " + currentTime);
         Console.WriteLine("Duration: " + duration);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("mpegtsInterop.destroy", videoId);
     }
 }
