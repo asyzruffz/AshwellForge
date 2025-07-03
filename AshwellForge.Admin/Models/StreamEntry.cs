@@ -19,7 +19,7 @@ public record StreamEntry(
     public static StreamEntry From(VideoStream stream) => new StreamEntry(
         stream!.StreamPath,
         (int)stream.ClientId,
-        stream.StartTime.ToShortTimeString(),
+        stream.StartTime.ToLocalTime().ToShortTimeString(),
         stream.SubscribersCount,
         $"{stream.Width}x{stream.Height}",
         stream.Framerate,
