@@ -11,7 +11,6 @@ public static class StreamClientExtension
             var settings = sp.GetRequiredService<IOptions<AshwellForgeSettings>>().Value;
 
             client.BaseAddress = new Uri(settings.StreamsBaseAddress);
-            //client.DefaultRequestHeaders.Add("Authorization", settings.AccessToken);
         });
 
         return services;

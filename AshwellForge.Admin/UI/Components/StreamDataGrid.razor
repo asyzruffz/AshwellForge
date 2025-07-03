@@ -1,6 +1,7 @@
 ﻿@using AshwellForge.Admin.Models;
 @using AshwellForge.Admin.Services;
-@inject NavigationManager NavigationManager
+@using Microsoft.Extensions.Options;
+@inject IOptions<AshwellForgeSettings> Option
 
 <MudDataGrid T="StreamEntry" Items="@Entries" SortMode="SortMode.Single" Filterable="false" QuickFilter="@quickFilter"
              Dense="true" ColumnResizeMode="ResizeMode.Column" Loading="loading" LoadingProgressColor="Color.Primary"
@@ -85,7 +86,7 @@
         return false;
     };
 
-    string RtmpPath(string streamPath) => $"{NavigationManager.BaseUri}{streamPath.Substring(1)}.flv";
+    string RtmpPath(string streamPath) => $"{Option.Value.RtmpBaseAddress}{streamPath}";
 
     protected override async Task OnInitializedAsync()
     {
