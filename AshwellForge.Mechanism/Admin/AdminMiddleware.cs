@@ -4,13 +4,13 @@ namespace AshwellForge.Mechanism.Admin;
 
 public class AdminMiddleware
 {
-    private readonly RequestDelegate _next;
-    private readonly AdminOptions _options;
+    private readonly RequestDelegate next;
+    private readonly AdminOptions options;
 
     public AdminMiddleware(RequestDelegate next, AdminOptions? options)
     {
-        _next = next;
-        _options = options ?? new AdminOptions();
+        this.next = next;
+        this.options = options ?? new AdminOptions();
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -18,12 +18,12 @@ public class AdminMiddleware
         if (Validate(context) && await TryServeAdminPanelUI(context))
             return;
 
-        await _next.Invoke(context);
+        await next.Invoke(context);
     }
 
     private async Task<bool> TryServeAdminPanelUI(HttpContext context)
     {
-        var fileContext = new FileContext(_options);
+        var fileContext = new FileContext(options);
         return await fileContext.ServeAdminPanelUI(context);
     }
 

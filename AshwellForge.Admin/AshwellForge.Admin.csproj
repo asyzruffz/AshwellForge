@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\static\**" />
-    <Content Remove="wwwroot\static\**" />
-    <EmbeddedResource Remove="wwwroot\static\**" />
-    <None Remove="wwwroot\static\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BlazorVideoPlayer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.6" PrivateAssets="all" />
