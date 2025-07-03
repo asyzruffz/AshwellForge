@@ -1,0 +1,12 @@
+﻿@inject IJSRuntime JSRuntime
+
+<MudIconButton Icon="@Icons.Material.Filled.ContentCopy" aria-label="Copy" OnClick="CopyTextToClipboard" />
+
+@code {
+    [Parameter] public required string Text { get; set; }
+
+    async Task CopyTextToClipboard()
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Text);
+    }
+}
