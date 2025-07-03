@@ -1,16 +1,11 @@
 ﻿using AshwellForge.Mechanism.Admin;
 using AshwellForge.Mechanism.RtmpServer;
-using AshwellForge.Mechanism.RtmpServer.Dtos;
 using AshwellForge.Mechanism.RtmpServer.Hls;
 using AshwellForge.Mechanism.RtmpServer.Services;
 using LiveStreamingServerNet;
 using LiveStreamingServerNet.Flv.Installer;
-using LiveStreamingServerNet.Rtmp;
-using LiveStreamingServerNet.StreamProcessor.AspNetCore.Installer;
-using LiveStreamingServerNet.StreamProcessor.Installer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace AshwellForge.Mechanism;
@@ -21,20 +16,11 @@ public static class Extensions
     {
         services.AddLiveStreamingServer(
             new IPEndPoint(IPAddress.Any, options.Port),
-            conf =>
+            config =>
             {
-                conf.Services.AddSingleton<RtmpStreamManagerApiService>();
-                conf.AddFlv();
-
-                var outputDir = Path.Combine(Directory.GetCurrentDirectory(), "output");
-                new DirectoryInfo(outputDir).Create();
-                conf.Configure(options => options.EnableGopCaching = false)
-                    .AddVideoCodecFilter(builder => builder.Include(VideoCodec.AVC).Include(VideoCodec.HEVC))
-                    .AddAudioCodecFilter(builder => builder.Include(AudioCodec.AAC))
-                    .AddStreamProcessor(options =>
-                        options.AddStreamProcessorEventHandler(svc =>
-                            new StreamProcessorEventListener(outputDir, svc.GetRequiredService<ILogger<StreamProcessorEventListener>>())))
-                    .AddHlsTransmuxer(options => options.Configure(config => config.OutputPathResolver = new HlsOutputPathResolver(outputDir)));
+                config.Services.AddSingleton<RtmpStreamManagerApiService>();
+                config.AddFlv();
+                config.AddHls();
             });
 
         services.AddStreamOperations();
@@ -55,7 +41,7 @@ public static class Extensions
         }
         if (options.HasHlsPreview)
         {
-            app.UseHlsFiles();
+            app.UseHls();
         }
 
         app.MapStreamManagerApiEndpoints(options.StreamsBaseUri);
