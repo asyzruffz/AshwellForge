@@ -17,6 +17,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddStreamingClient();
 builder.Services.AddScoped<StreamsApi>();
+
 builder.Services.AddMudServices();
+builder.Services.AddVideoPlayerServices();
 
 await builder.Build().RunAsync();

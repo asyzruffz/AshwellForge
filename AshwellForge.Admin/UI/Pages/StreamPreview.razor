@@ -1,11 +1,12 @@
 ﻿@page "/streams/preview"
+@using AshwellForge.Admin.Models
 @using AshwellForge.Admin.Utils
 @inject NavigationManager NavigationManager
 
 <PageContainer Title="Stream Preview">
     <PageContent>
-        <MudPaper Width="100%">
-            <StreamVideoPlayer Url="@StreamUrl" />
+        <MudPaper Class="pa-2" Width="100%">
+            <StreamVideoPlayer Source="GetVideoSource()" />
         </MudPaper>
     </PageContent>
 </PageContainer>
@@ -22,4 +23,6 @@
 
         StreamPath = parameters.Get("StreamPath");
     }
+
+    VideoSource GetVideoSource() => VideoSource.Flv($"{NavigationManager.BaseUri}{StreamPath}.flv");
 }
