@@ -5,15 +5,12 @@
 <MudContainer class="rounded" Gutters="false">
     <Player id="@videoId"
             CurrentTimeControl="true"
-            DurationControl="true"
             FullscreenControl="true"
             PIPControl="true"
             VolumeControl="true"
             MuteControl="true"
             SettingsControl="true"
-            ProgressControl="true"
             PlayControl="true"
-            AirplayControl="true"
             PlayLargeControl="true"
             Quality="true"
             Speed="true"
@@ -58,8 +55,8 @@
 
     void OnVideoTimeUpdate(float currentTime, float duration)
     {
-        Console.WriteLine("Current Time: " + currentTime);
-        Console.WriteLine("Duration: " + duration);
+        //Console.WriteLine("Current Time: " + currentTime);
+        //Console.WriteLine("Duration: " + duration);
     }
 
     public async ValueTask DisposeAsync()

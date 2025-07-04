@@ -12,15 +12,27 @@ window.mpegtsInterop = {
             url: streamUrl
         });
         player.attachMediaElement(video);
-        player.load();
-        // Store instance for later cleanup
-        window.mpegtsInterop[videoElementId] = player;
+        try {
+            player.load();
+        }
+        catch (err) {
+            console.error("Error loading video:", err);
+        }
+        finally {
+            // Store instance for later cleanup
+            window.mpegtsInterop[videoElementId] = player;
+        }
     },
 
     play: (videoElementId) => {
         const player = window.mpegtsInterop[videoElementId];
-        console.log("Start playing");
-        player.play();
+        try {
+            console.log("Start playing");
+            player.play();
+        }
+        catch (err) {
+            console.error("Error playing video:", err);
+        }
     },
 
     destroy: (videoElementId) => {
