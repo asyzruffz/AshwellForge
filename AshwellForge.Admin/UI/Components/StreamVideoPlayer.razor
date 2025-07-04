@@ -53,7 +53,7 @@
 
     async Task OnPlayVideo()
     {
-        await JSRuntime.InvokeVoidAsync("mpegtsInterop.play");
+        await JSRuntime.InvokeVoidAsync("mpegtsInterop.play", videoId);
     }
 
     void OnVideoTimeUpdate(float currentTime, float duration)

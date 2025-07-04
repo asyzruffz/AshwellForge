@@ -17,7 +17,7 @@ window.mpegtsInterop = {
         window.mpegtsInterop[videoElementId] = player;
     },
 
-    play: () => {
+    play: (videoElementId) => {
         const player = window.mpegtsInterop[videoElementId];
         console.log("Start playing");
         player.play();
