@@ -9,9 +9,9 @@ namespace AshwellForge.Mechanism.RtmpServer;
 
 internal static class StreamManagerApiEndpoints
 {
-    public static IEndpointRouteBuilder MapStreamManagerApiEndpoints(this IEndpointRouteBuilder builder)
+    public static IEndpointRouteBuilder MapStreamManagerApiEndpoints(this IEndpointRouteBuilder builder, string streamsBaseUri)
     {
-        RouteGroupBuilder endpoints = builder.MapGroup("api/v1/streams").AddEndpointFilter<ApiExceptionEndpointFilter>();
+        RouteGroupBuilder endpoints = builder.MapGroup(streamsBaseUri).AddEndpointFilter<ApiExceptionEndpointFilter>();
         endpoints.MapGet("/", GetStreams);
         endpoints.MapDelete("/", DeleteStream);
         return builder;
