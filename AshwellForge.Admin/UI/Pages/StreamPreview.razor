@@ -1,6 +1,8 @@
 ﻿@page "/streams/preview"
 @using AshwellForge.Admin.Models
 @using AshwellForge.Admin.Utils
+@using Microsoft.Extensions.Options
+@inject IOptions<AshwellForgeSettings> Settings
 @inject NavigationManager NavigationManager
 
 <PageContainer Title="Stream Preview">
@@ -14,7 +16,7 @@
 @code {
     public string? StreamPath { get; set; }
 
-    string StreamUrl => $"{NavigationManager.BaseUri}{StreamPath}.flv";
+    string StreamUrl => string.Format(Settings.Value.HttpFlvUriPattern, StreamPath);
 
     protected override void OnParametersSet()
     {
