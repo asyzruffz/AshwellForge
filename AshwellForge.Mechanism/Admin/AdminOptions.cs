@@ -66,7 +66,6 @@ public class AdminOptions
     private static string? GetDefaultAdminPanelUIPath()
     {
         var directoryPath = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
-        //var directoryPath = "_content\\AshwellForge.Mechanism";
         if (!string.IsNullOrEmpty(directoryPath))
         {
             var adminPanelUIPath = Path.Combine(directoryPath, "admin-panel-ui");
