@@ -1,5 +1,4 @@
 using AshwellForge.Mechanism;
-using AshwellForge.Mechanism.Admin;
 using AshwellForge.Mechanism.RtmpServer;
 using AshwellForge.Server.Chassis;
 
@@ -29,10 +28,6 @@ else
 app.UseAntiforgery();
 app.MapStaticAssets();
 
-app.UseAdmin(new AdminOptions
-{
-    ContentRootPath = builder.Environment.ContentRootPath,
-    HasHttpFlvPreview = true
-});
+app.UseAdmin(new AdminOptions { HasHttpFlvPreview = true });
 
 app.Run();
