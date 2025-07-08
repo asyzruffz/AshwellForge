@@ -9,7 +9,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Logging.AddConfiguration(
     builder.Configuration.GetSection("Logging"));
 builder.Services.Configure<AshwellForgeSettings>(
-    builder.Configuration.GetSection(nameof(AshwellForgeSettings)));
+    builder.Configuration.GetSection(AshwellForgeSettings.SectionName));
 
 builder.RootComponents.Add<Routes>("#route");
 
