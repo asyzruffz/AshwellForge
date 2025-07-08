@@ -4,20 +4,12 @@ using AshwellForge.Server.Chassis;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
-    options.AddPolicy("Development",
-    policy => policy
-        .AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod()));
-
 builder.Services.AddLiveStreamServer(new ServerOptions { Port = 1935 });
 builder.Services.AddChassis();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors("Development");
     app.UseWebAssemblyDebugging();
 }
 else
