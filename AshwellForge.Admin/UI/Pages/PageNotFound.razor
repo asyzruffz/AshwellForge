@@ -1,0 +1,12 @@
+﻿@page "/{*route:nonfile}"
+
+<PageContainer Title="Page Not Found">
+    <PageContent>
+        Sorry, there's nothing at this address.
+    </PageContent>
+</PageContainer>
+
+@code {
+    [Parameter]
+    public string? Route { get; set; }
+}

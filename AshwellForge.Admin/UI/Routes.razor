@@ -1,4 +1,6 @@
-﻿<Router AppAssembly="@AssemblyReference.Assembly">
+﻿@using AshwellForge.Admin.UI.Pages
+
+<Router AppAssembly="@AssemblyReference.Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
@@ -6,7 +8,7 @@
     <NotFound>
         <PageTitle>Ashwell Forge - Not Found</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
+            <PageNotFound />
         </LayoutView>
     </NotFound>
 </Router>
