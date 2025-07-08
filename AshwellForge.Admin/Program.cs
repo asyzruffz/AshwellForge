@@ -11,7 +11,7 @@ builder.Logging.AddConfiguration(
 builder.Services.Configure<AshwellForgeSettings>(
     builder.Configuration.GetSection(nameof(AshwellForgeSettings)));
 
-builder.RootComponents.Add<Routes>("#app");
+builder.RootComponents.Add<Routes>("#route");
 
 builder.Services.AddStreamingClient();
 builder.Services.AddScoped<StreamsApi>();
