@@ -1,6 +1,7 @@
 using AshwellForge.Mechanism;
 using AshwellForge.Mechanism.Admin;
 using AshwellForge.Mechanism.RtmpServer;
+using AshwellForge.Server.Chassis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +13,26 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()));
 
 builder.Services.AddLiveStreamServer(new ServerOptions { Port = 1935 });
+builder.Services.AddChassis();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseCors("Development");
+    app.UseWebAssemblyDebugging();
+}
+else
+{
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
 }
 
-app.UseAdminPanelUI(new AdminOptions { BasePath = "/ui", HasHttpFlvPreview = true });
+app.UseAntiforgery();
+app.MapStaticAssets();
+
+app.UseAdmin(new AdminOptions
+{
+    ContentRootPath = builder.Environment.ContentRootPath,
+    HasHttpFlvPreview = true
+});
 
 app.Run();

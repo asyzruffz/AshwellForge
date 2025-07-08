@@ -4,6 +4,7 @@ using AshwellForge.Mechanism.RtmpServer.Services;
 using LiveStreamingServerNet;
 using LiveStreamingServerNet.Flv.Installer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 
@@ -42,4 +43,7 @@ public static class Extensions
         app.UseMiddleware<AdminMiddleware>(options);
         return app;
     }
+
+    public static IEndpointRouteBuilder MapStreamManagerEndpoints(this IEndpointRouteBuilder builder, string streamsBaseUri) =>
+        builder.MapStreamManagerApiEndpoints(streamsBaseUri);
 }
