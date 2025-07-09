@@ -36,8 +36,8 @@ internal static class StreamManagerApiEndpoints
     {
         var result = await handler.Handle(new DeleteStreamOperation(streamId), cancellationToken);
 
-        return result.Match<IResult>(
+        return result.Match(
             onSuccess: TypedResults.Ok,
-            onFailure: msg => TypedResults.InternalServerError(msg));
+            onFailure: msg => { var err = ApiError.From(msg); return Results.StatusCode(err.StatusCode); });
     }
 }

@@ -20,8 +20,7 @@ internal sealed class GetStreamsOperationHandler : IOperationHandler<GetStreamsO
     public async Task<Result<GetStreamsResponse>> Handle(GetStreamsOperation operation, CancellationToken cancellationToken)
     {
         var service = server.Services.GetRequiredService<RtmpStreamManagerApiService>();
-        var response = await service.GetStreamsAsync(operation.Parameter);
-        return Result<GetStreamsResponse>.Ok(response);
+        return await service.GetStreamsAsync(operation.Parameter);
     }
 }
 
@@ -39,7 +38,6 @@ internal sealed class DeleteStreamOperationHandler : IOperationHandler<DeleteStr
     public async Task<Result> Handle(DeleteStreamOperation operation, CancellationToken cancellationToken)
     {
         var service = server.Services.GetRequiredService<RtmpStreamManagerApiService>();
-        await service.DeleteStreamAsync(operation.StreamId, cancellationToken);
-        return Result.Ok();
+        return await service.DeleteStreamAsync(operation.StreamId, cancellationToken);
     }
 }
