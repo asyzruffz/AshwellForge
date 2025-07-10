@@ -3,6 +3,7 @@ using AshwellForge.Core.Data;
 using AshwellForge.Mechanism.Abstractions;
 using AshwellForge.Mechanism.RtmpServer.Operations;
 using AshwellForge.Mechanism.RtmpServer.Services;
+using AshwellForge.Mechanism.Twitch.Operations;
 using LiveStreamingServerNet;
 using LiveStreamingServerNet.Flv.Installer;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,7 @@ public static class Extensions
     {
         services.AddScoped<IOperationHandler<GetStreamsOperation, GetStreamsResponse>, GetStreamsOperationHandler>();
         services.AddScoped<IOperationHandler<DeleteStreamOperation>, DeleteStreamOperationHandler>();
+        services.AddScoped<IOperationHandler<GetTwitchIngestServersOperation, TwitchIngests>, GetTwitchIngestServersOperationHandler>();
         return services;
     }
 }
