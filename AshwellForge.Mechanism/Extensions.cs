@@ -1,4 +1,6 @@
-﻿using AshwellForge.Mechanism.RtmpServer;
+﻿using AshwellForge.Core.Data;
+using AshwellForge.Mechanism.Abstractions;
+using AshwellForge.Mechanism.RtmpServer;
 using AshwellForge.Mechanism.RtmpServer.Operations;
 using AshwellForge.Mechanism.RtmpServer.Services;
 using LiveStreamingServerNet;
@@ -21,6 +23,13 @@ public static class Extensions
             });
 
         services.AddStreamOperations();
+        return services;
+    }
+
+    static IServiceCollection AddStreamOperations(this IServiceCollection services)
+    {
+        services.AddScoped<IOperationHandler<GetStreamsOperation, GetStreamsResponse>, GetStreamsOperationHandler>();
+        services.AddScoped<IOperationHandler<DeleteStreamOperation>, DeleteStreamOperationHandler>();
         return services;
     }
 }
