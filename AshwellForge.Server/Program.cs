@@ -1,4 +1,5 @@
 using AshwellForge.Mechanism;
+using AshwellForge.Peripheral;
 using AshwellForge.Server;
 using AshwellForge.Server.Admin;
 
@@ -9,6 +10,7 @@ builder.Services.Configure<ServerOptions>(
 
 builder.Services.AddServer(builder.Configuration);
 builder.Services.AddMechanism();
+builder.Services.AddPeripheral();
 builder.Services.AddAdmin();
 
 var app = builder.Build();
