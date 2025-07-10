@@ -4,7 +4,7 @@ using AshwellForge.Mechanism.RtmpServer.Services;
 using LiveStreamingServerNet.Networking.Server.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AshwellForge.Mechanism.RtmpServer;
+namespace AshwellForge.Mechanism.RtmpServer.Operations;
 
 public sealed record GetStreamsOperation(GetStreamsRequest Parameter) : IOperation<GetStreamsResponse>;
 

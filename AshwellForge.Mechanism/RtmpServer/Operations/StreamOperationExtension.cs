@@ -2,7 +2,7 @@
 using AshwellForge.Mechanism.RtmpServer.Dtos;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AshwellForge.Mechanism.RtmpServer;
+namespace AshwellForge.Mechanism.RtmpServer.Operations;
 
 internal static class StreamOperationExtension
 {
