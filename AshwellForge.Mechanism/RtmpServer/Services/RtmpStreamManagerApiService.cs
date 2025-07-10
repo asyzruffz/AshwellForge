@@ -1,11 +1,12 @@
-﻿using AshwellForge.Core.Data;
+﻿using AshwellForge.Core.Abstractions;
+using AshwellForge.Core.Data;
 using AshwellForge.Core.Utils;
 using AshwellForge.Mechanism.RtmpServer.Utils;
 using LiveStreamingServerNet.Rtmp.Server.Contracts;
 
 namespace AshwellForge.Mechanism.RtmpServer.Services;
 
-internal class RtmpStreamManagerApiService
+internal class RtmpStreamManagerApiService : IRtmpStreamManagerApiService
 {
     private readonly IRtmpStreamInfoManager streamInfoManager;
 
@@ -14,7 +15,7 @@ internal class RtmpStreamManagerApiService
         this.streamInfoManager = streamInfoManager;
     }
 
-    public Task<Result<GetStreamsResponse>> GetStreamsAsync(GetStreamsRequest request)
+    public Task<Result<GetStreamsResponse>> GetStreamsAsync(GetStreamsRequest request, CancellationToken cancellationToken)
     {
         var (page, pageSize, filter) = request;
 
@@ -35,7 +36,7 @@ internal class RtmpStreamManagerApiService
         return Task.FromResult(Result<GetStreamsResponse>.Ok(new GetStreamsResponse(result, totalCount)));
     }
 
-    public async Task<CustomResult<ApiError>> DeleteStreamAsync(string streamId, CancellationToken cancellation)
+    public async Task<CustomResult<ApiError>> DeleteStreamAsync(string streamId, CancellationToken cancellationToken)
     {
         var splitIndex = streamId.IndexOf('@');
 
@@ -48,7 +49,7 @@ internal class RtmpStreamManagerApiService
         if (stream == null || stream.Publisher.Id != clientId)
             return CustomResult<ApiError>.Fail(ApiError.NotFound($"Stream ({streamId}) not found."));
 
-        await stream.Publisher.DisconnectAsync(cancellation);
+        await stream.Publisher.DisconnectAsync(cancellationToken);
 
         return CustomResult<ApiError>.Ok();
     }

@@ -1,4 +1,5 @@
-﻿using AshwellForge.Core.Data;
+﻿using AshwellForge.Core.Abstractions;
+using AshwellForge.Core.Data;
 using AshwellForge.Mechanism.Abstractions;
 using AshwellForge.Mechanism.RtmpServer;
 using AshwellForge.Mechanism.RtmpServer.Operations;
@@ -18,7 +19,7 @@ public static class Extensions
             new IPEndPoint(IPAddress.Any, options.Port),
             conf =>
             {
-                conf.Services.AddSingleton<RtmpStreamManagerApiService>();
+                conf.Services.AddSingleton<IRtmpStreamManagerApiService, RtmpStreamManagerApiService>();
                 conf.AddFlv();
             });
 
