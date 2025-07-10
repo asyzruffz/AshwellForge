@@ -1,7 +1,7 @@
 ﻿using LiveStreamingServerNet.Rtmp.Server.Contracts;
 using Stream = AshwellForge.Mechanism.RtmpServer.Dtos.Stream;
 
-namespace AshwellForge.Mechanism.RtmpServer.Services;
+namespace AshwellForge.Mechanism.RtmpServer.Dtos;
 
 public static class StreamInfoExtension
 {
