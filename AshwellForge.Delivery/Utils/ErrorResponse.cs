@@ -1,4 +1,4 @@
-﻿namespace AshwellForge.Mechanism.Core;
+﻿namespace AshwellForge.Delivery.Utils;
 
 public class ErrorResponse
 {

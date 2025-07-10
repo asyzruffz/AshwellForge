@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshwellForge.Mechanism", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshwellForge.Admin", "AshwellForge.Admin\AshwellForge.Admin.csproj", "{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshwellForge.Core", "AshwellForge.Core\AshwellForge.Core.csproj", "{4775A23D-49B8-4E46-85C9-978577FEC3D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AshwellForge.Delivery", "AshwellForge.Delivery\AshwellForge.Delivery.csproj", "{E46B3E53-8CBD-4DA2-B536-298EACA64369}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9BCF30F-7B78-41E1-9F64-75885A9DD5CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4775A23D-49B8-4E46-85C9-978577FEC3D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4775A23D-49B8-4E46-85C9-978577FEC3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4775A23D-49B8-4E46-85C9-978577FEC3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4775A23D-49B8-4E46-85C9-978577FEC3D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E46B3E53-8CBD-4DA2-B536-298EACA64369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E46B3E53-8CBD-4DA2-B536-298EACA64369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E46B3E53-8CBD-4DA2-B536-298EACA64369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E46B3E53-8CBD-4DA2-B536-298EACA64369}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,5 @@
 ﻿using LiveStreamingServerNet.Rtmp.Server.Contracts;
-using Stream = AshwellForge.Mechanism.RtmpServer.Dtos.Stream;
+using Stream = AshwellForge.Core.Data.Stream;
 
 namespace AshwellForge.Mechanism.RtmpServer.Dtos;
 

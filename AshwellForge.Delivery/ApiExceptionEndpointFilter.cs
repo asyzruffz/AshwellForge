@@ -1,8 +1,8 @@
-﻿using AshwellForge.Mechanism.Core;
+﻿using AshwellForge.Delivery.Utils;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
-namespace AshwellForge.Mechanism.RtmpServer;
+namespace AshwellForge.Delivery;
 
 public class ApiExceptionEndpointFilter : IEndpointFilter
 {

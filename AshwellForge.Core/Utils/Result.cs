@@ -1,4 +1,4 @@
-﻿namespace AshwellForge.Mechanism.Core;
+﻿namespace AshwellForge.Core.Utils;
 
 public class Result
 {

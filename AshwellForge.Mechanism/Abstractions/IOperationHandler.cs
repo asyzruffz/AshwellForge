@@ -1,4 +1,6 @@
-﻿namespace AshwellForge.Mechanism.Core;
+﻿using AshwellForge.Core.Utils;
+
+namespace AshwellForge.Mechanism.Abstractions;
 
 public interface IOperationHandler<in TOperation> where TOperation : IOperation
 {

@@ -1,4 +1,4 @@
-﻿namespace AshwellForge.Mechanism.Core;
+﻿namespace AshwellForge.Mechanism.Abstractions;
 
 public interface IOperation : IBaseOperation;
 

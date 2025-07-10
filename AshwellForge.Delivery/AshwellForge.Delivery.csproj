@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AshwellForge.Core\AshwellForge.Core.csproj" />
+    <ProjectReference Include="..\AshwellForge.Mechanism\AshwellForge.Mechanism.csproj" />
+  </ItemGroup>
+
+</Project>

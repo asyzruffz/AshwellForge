@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AshwellForge.Admin\AshwellForge.Admin.csproj" />
+    <ProjectReference Include="..\AshwellForge.Core\AshwellForge.Core.csproj" />
+    <ProjectReference Include="..\AshwellForge.Delivery\AshwellForge.Delivery.csproj" />
     <ProjectReference Include="..\AshwellForge.Mechanism\AshwellForge.Mechanism.csproj" />
   </ItemGroup>
 

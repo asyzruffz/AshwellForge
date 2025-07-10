@@ -1,4 +1,4 @@
-﻿namespace AshwellForge.Mechanism.RtmpServer.Dtos;
+﻿namespace AshwellForge.Core.Data;
 
 public class Stream
 {
