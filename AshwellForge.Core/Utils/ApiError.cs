@@ -1,4 +1,4 @@
-﻿namespace AshwellForge.Delivery.Utils;
+﻿namespace AshwellForge.Core.Utils;
 
 public record ApiError(int StatusCode, string Message)
 {
