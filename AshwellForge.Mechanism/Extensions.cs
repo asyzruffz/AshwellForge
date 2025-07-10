@@ -1,7 +1,6 @@
 ﻿using AshwellForge.Core.Abstractions;
 using AshwellForge.Core.Data;
 using AshwellForge.Mechanism.Abstractions;
-using AshwellForge.Mechanism.RtmpServer;
 using AshwellForge.Mechanism.RtmpServer.Operations;
 using AshwellForge.Mechanism.RtmpServer.Services;
 using LiveStreamingServerNet;
@@ -13,16 +12,22 @@ namespace AshwellForge.Mechanism;
 
 public static class Extensions
 {
-    public static IServiceCollection AddLiveStreamServer(this IServiceCollection services, ServerOptions options)
+    public static IServiceCollection AddLiveStreamServer(this IServiceCollection services, int port)
     {
         services.AddLiveStreamingServer(
-            new IPEndPoint(IPAddress.Any, options.Port),
+            new IPEndPoint(IPAddress.Any, port),
             conf =>
             {
                 conf.Services.AddSingleton<IRtmpStreamManagerApiService, RtmpStreamManagerApiService>();
                 conf.AddFlv();
             });
 
+        return services;
+    }
+
+    public static IServiceCollection AddMechanism(this IServiceCollection services)
+    {
+        services.AddScoped<IIngestServersService, IngestServersService>();
         services.AddStreamOperations();
         return services;
     }

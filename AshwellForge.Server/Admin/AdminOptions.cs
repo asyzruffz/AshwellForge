@@ -1,4 +1,4 @@
-﻿namespace AshwellForge.Server.Chassis;
+﻿namespace AshwellForge.Server.Admin;
 
 /// <summary>
 /// Configuration options for the Admin Panel UI.

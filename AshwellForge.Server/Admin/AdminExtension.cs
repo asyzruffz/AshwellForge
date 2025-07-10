@@ -1,11 +1,11 @@
 ﻿using AshwellForge.Delivery;
 using LiveStreamingServerNet.Flv.Installer;
 
-namespace AshwellForge.Server.Chassis;
+namespace AshwellForge.Server.Admin;
 
-internal static class ChassisExtension
+internal static class AdminExtension
 {
-    public static IServiceCollection AddChassis(this IServiceCollection services)
+    public static IServiceCollection AddAdmin(this IServiceCollection services)
     {
         services.AddRazorComponents()
             .AddInteractiveWebAssemblyComponents();
@@ -34,7 +34,7 @@ internal static class ChassisExtension
     {
         app.MapRazorComponents<App>()
             .AddInteractiveWebAssemblyRenderMode()
-            .AddAdditionalAssemblies(Admin.AssemblyReference.Assembly);
+            .AddAdditionalAssemblies(AshwellForge.Admin.AssemblyReference.Assembly);
         return app;
     }
 }

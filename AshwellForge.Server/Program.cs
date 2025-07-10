@@ -1,11 +1,15 @@
 using AshwellForge.Mechanism;
-using AshwellForge.Mechanism.RtmpServer;
-using AshwellForge.Server.Chassis;
+using AshwellForge.Server;
+using AshwellForge.Server.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddLiveStreamServer(new ServerOptions { Port = 1935 });
-builder.Services.AddChassis();
+builder.Services.Configure<ServerOptions>(
+    builder.Configuration.GetSection(ServerOptions.SectionName));
+
+builder.Services.AddServer(builder.Configuration);
+builder.Services.AddMechanism();
+builder.Services.AddAdmin();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
