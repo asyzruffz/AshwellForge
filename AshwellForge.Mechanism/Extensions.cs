@@ -28,12 +28,18 @@ public static class Extensions
 
     public static IServiceCollection AddMechanism(this IServiceCollection services)
     {
-        services.AddScoped<IIngestServersService, IngestServersService>();
-        services.AddStreamOperations();
+        services.AddServices();
+        services.AddOperations();
         return services;
     }
 
-    static IServiceCollection AddStreamOperations(this IServiceCollection services)
+    static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<IIngestServersService, IngestServersService>();
+        return services;
+    }
+
+    static IServiceCollection AddOperations(this IServiceCollection services)
     {
         services.AddScoped<IApiOperationHandler<GetStreamsOperation, GetStreamsResponse>, GetStreamsOperationHandler>();
         services.AddScoped<IApiOperationHandler<DeleteStreamOperation>, DeleteStreamOperationHandler>();
