@@ -1,0 +1,34 @@
+﻿@page "/outbound"
+
+<PageContainer Title="Outbound">
+    <PageContent>
+        <MudText Class="mb-2" Typo="Typo.h6">Ingest Servers</MudText>
+        <MudPaper Width="100%">
+            <MudList T="string" Dense="true" Gutters="true" Padding="true">
+                <MudListSubheader Class="d-flex">
+                    <MudIcon Class="mr-2" Icon="@Icons.Material.Filled.FolderSpecial" Color="Color.Primary" />
+                    <MudText Typo="Typo.body1">Saved</MudText>
+                </MudListSubheader>
+                <MudListItem Text="Hydrogen (H-1) - stable" Icon="@Icons.Material.Filled.RadioButtonChecked" IconColor="Color.Primary" />
+                <MudListItem Text="Deuterium (H-2) - stable" Icon="@Icons.Material.Filled.RadioButtonChecked" IconColor="Color.Primary" />
+                <MudListItem Text="Tritium (H-3) - radioactive" Icon="@Icons.Custom.Uncategorized.Radioactive" IconColor="Color.Tertiary" />
+                <MudDivider Class="mt-2" />
+                <MudListSubheader Class="d-flex">
+                    <MudIcon Class="mr-2" Icon="@Icons.Material.Filled.ChatBubble" Color="Color.Primary" />
+                    <MudText Typo="Typo.body1">Twitch</MudText>
+                </MudListSubheader>
+                <MudListItem Text="Uranium (U-92) - radioactive" Icon="@Icons.Custom.Uncategorized.Radioactive" IconColor="Color.Tertiary">
+                    <NestedList>
+                        <MudListItem Text="Uranium (U-234) - radioactive" Icon="@Icons.Custom.Uncategorized.Radioactive" IconColor="Color.Tertiary" />
+                        <MudListItem Text="Uranium (U-235) - radioactive" Icon="@Icons.Custom.Uncategorized.Radioactive" IconColor="Color.Tertiary" />
+                        <MudListItem Text="Uranium (U-238) - radioactive" Icon="@Icons.Custom.Uncategorized.Radioactive" IconColor="Color.Tertiary" />
+                    </NestedList>
+                </MudListItem>
+            </MudList>
+        </MudPaper>
+    </PageContent>
+</PageContainer>
+
+@code {
+
+}
