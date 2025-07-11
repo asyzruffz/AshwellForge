@@ -14,7 +14,6 @@ builder.Services.Configure<AshwellForgeSettings>(
 builder.RootComponents.Add<Routes>("#route");
 
 builder.Services.AddStreamingClient();
-builder.Services.AddScoped<StreamsApi>();
 
 builder.Services.AddMudServices();
 builder.Services.AddVideoPlayerServices();

@@ -1,18 +1,11 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace AshwellForge.Admin.Services;
+﻿namespace AshwellForge.Admin.Services;
 
 public static class StreamClientExtension
 {
     public static IServiceCollection AddStreamingClient(this IServiceCollection services)
     {
-        services.AddHttpClient<StreamsApi>((sp, client) =>
-        {
-            var settings = sp.GetRequiredService<IOptions<AshwellForgeSettings>>().Value;
-
-            client.BaseAddress = new Uri(settings.StreamsBaseAddress);
-        });
-
+        services.AddHttpClient<StreamsApi>();
+        services.AddScoped<StreamsApi>();
         return services;
     }
 }
