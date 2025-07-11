@@ -19,11 +19,11 @@ internal class IngestServerService : IIngestServerService
         this.twitchOperation = twitchOperation;
     }
 
-    public async Task<ApiResult<IEnumerable<IngestServer>>> GetIngestServers(bool forceRefresh = false)
+    public async Task<ApiResult<IEnumerable<IngestServer>>> GetIngestServers(bool forceRefresh, CancellationToken cancellationToken)
     {
         if (forceRefresh || !await storage.HasIngestServers())
         {
-            var result = await twitchOperation.Handle(new GetTwitchIngestServersOperation(), default);
+            var result = await twitchOperation.Handle(new GetTwitchIngestServersOperation(), cancellationToken);
             if (!result.IsSuccess)
             {
                 return ApiResult<IEnumerable<IngestServer>>.Fail(result.Error!);

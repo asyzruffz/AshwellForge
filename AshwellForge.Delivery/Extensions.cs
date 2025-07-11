@@ -14,6 +14,8 @@ public static class Extensions
         endpoints.MapGet("/streams", StreamManager.GetStreams);
         endpoints.MapDelete("/streams", StreamManager.DeleteStream);
 
+        endpoints.MapGet("/ingests", StreamManager.GetIngestServers);
+
         return builder;
     }
 }

@@ -5,5 +5,5 @@ namespace AshwellForge.Core.Abstractions;
 
 public interface IIngestServerService
 {
-    Task<ApiResult<IEnumerable<IngestServer>>> GetIngestServers(bool forceRefresh);
+    Task<ApiResult<IEnumerable<IngestServer>>> GetIngestServers(bool forceRefresh, CancellationToken cancellationToken);
 }

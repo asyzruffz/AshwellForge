@@ -10,19 +10,19 @@ internal static class StreamManager
 {
     public static async Task<IResult> GetStreams(
         [AsParameters] GetStreamsRequest parameter,
-        IApiOperationHandler<GetStreamsOperation, GetStreamsResponse> handler,
+        [FromServices] IApiOperationHandler<GetStreamsOperation, GetStreamsResponse> handler,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(new GetStreamsOperation(parameter), cancellationToken);
 
         return result.Match<IResult>(
-            onSuccess: response => TypedResults.Ok(response),
+            onSuccess: TypedResults.Ok,
             onFailure: err => TypedResults.InternalServerError(err.Message));
     }
 
     public static async Task<IResult> DeleteStream(
         [FromQuery] string streamId,
-        IApiOperationHandler<DeleteStreamOperation> handler,
+        [FromServices] IApiOperationHandler<DeleteStreamOperation> handler,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(new DeleteStreamOperation(streamId), cancellationToken);
@@ -30,5 +30,17 @@ internal static class StreamManager
         return result.Match(
             onSuccess: TypedResults.Ok,
             onFailure: err => Results.StatusCode(err.StatusCode));
+    }
+
+    public static async Task<IResult> GetIngestServers(
+        [AsParameters] bool refresh,
+        [FromServices] IApiOperationHandler<GetIngestServersOperation, IEnumerable<IngestServer>> handler,
+        CancellationToken cancellationToken)
+    {
+        var result = await handler.Handle(new GetIngestServersOperation(refresh), cancellationToken);
+
+        return result.Match<IResult>(
+            onSuccess: TypedResults.Ok,
+            onFailure: err => TypedResults.InternalServerError(err.Message));
     }
 }
