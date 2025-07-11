@@ -35,7 +35,7 @@ public static class Extensions
 
     static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<IIngestServersService, IngestServersService>();
+        services.AddScoped<IIngestServerService, IngestServerService>();
         return services;
     }
 

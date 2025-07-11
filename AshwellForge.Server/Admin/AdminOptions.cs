@@ -12,10 +12,10 @@ public class AdminOptions
     public string BasePath { get; set; } = "/ui";
 
     /// <summary>
-    /// Base URI for stream-related API endpoints. 
-    /// Default: "/api/v1/streams".
+    /// Base URI for admin API endpoints. 
+    /// Default: "/api/v1".
     /// </summary>
-    public string StreamsBaseUri { get; set; } = "/api/v1/streams";
+    public string ApiBaseUri { get; set; } = "/api/v1";
 
     /// <summary>
     /// Indicates whether HTTP FLV preview functionality is enabled.

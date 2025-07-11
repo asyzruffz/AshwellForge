@@ -6,12 +6,12 @@ using AshwellForge.Mechanism.Twitch.Operations;
 
 namespace AshwellForge.Mechanism.RtmpServer.Services;
 
-internal class IngestServersService : IIngestServersService
+internal class IngestServerService : IIngestServerService
 {
     readonly IAshwellForgeStorage storage;
     readonly IApiOperationHandler<GetTwitchIngestServersOperation, TwitchIngests> twitchOperation;
 
-    public IngestServersService(
+    public IngestServerService(
         IAshwellForgeStorage storage,
         IApiOperationHandler<GetTwitchIngestServersOperation, TwitchIngests> twitchOperation)
     {

@@ -25,7 +25,7 @@ internal static class AdminExtension
             app.UseHttpFlv();
         }
 
-        app.MapStreamManagerEndpoints(options.StreamsBaseUri);
+        app.MapAdminApiEndpoints(options.ApiBaseUri);
         app.MapAdminComponents();
         return app;
     }

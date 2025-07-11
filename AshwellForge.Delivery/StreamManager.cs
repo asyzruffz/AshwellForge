@@ -1,23 +1,13 @@
 ﻿using AshwellForge.Core.Data;
 using AshwellForge.Mechanism.Abstractions;
 using AshwellForge.Mechanism.RtmpServer.Operations;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace AshwellForge.Delivery;
 
-internal static class StreamManagerApiEndpoints
+internal static class StreamManager
 {
-    public static IEndpointRouteBuilder MapStreamManagerApiEndpoints(this IEndpointRouteBuilder builder, string streamsBaseUri)
-    {
-        RouteGroupBuilder endpoints = builder.MapGroup(streamsBaseUri).AddEndpointFilter<ApiExceptionEndpointFilter>();
-        endpoints.MapGet("/", GetStreams);
-        endpoints.MapDelete("/", DeleteStream);
-        return builder;
-    }
-
     public static async Task<IResult> GetStreams(
         [AsParameters] GetStreamsRequest parameter,
         IApiOperationHandler<GetStreamsOperation, GetStreamsResponse> handler,
