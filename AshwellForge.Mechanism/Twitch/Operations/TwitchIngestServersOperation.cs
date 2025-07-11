@@ -7,7 +7,7 @@ namespace AshwellForge.Mechanism.Twitch.Operations;
 
 public sealed record GetTwitchIngestServersOperation : IOperation<TwitchIngests>;
 
-internal sealed class GetTwitchIngestServersOperationHandler : IOperationHandler<GetTwitchIngestServersOperation, TwitchIngests>
+internal sealed class GetTwitchIngestServersOperationHandler : IApiOperationHandler<GetTwitchIngestServersOperation, TwitchIngests>
 {
     readonly ITwitchIngestService service;
 
@@ -16,7 +16,7 @@ internal sealed class GetTwitchIngestServersOperationHandler : IOperationHandler
         service = ingestService;
     }
 
-    public async Task<Result<TwitchIngests>> Handle(GetTwitchIngestServersOperation operation, CancellationToken cancellationToken)
+    public async Task<ApiResult<TwitchIngests>> Handle(GetTwitchIngestServersOperation operation, CancellationToken cancellationToken)
     {
         return await service.GetIngestServers();
     }

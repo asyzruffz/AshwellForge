@@ -9,16 +9,16 @@ namespace AshwellForge.Mechanism.RtmpServer.Operations;
 
 public sealed record GetStreamsOperation(GetStreamsRequest Parameter) : IOperation<GetStreamsResponse>;
 
-internal sealed class GetStreamsOperationHandler : IOperationHandler<GetStreamsOperation, GetStreamsResponse>
+internal sealed class GetStreamsOperationHandler : IApiOperationHandler<GetStreamsOperation, GetStreamsResponse>
 {
     readonly IServer server;
 
-    public GetStreamsOperationHandler(IServer server)
+    public GetStreamsOperationHandler(IServer server, IOperationHandler<GetTwitchIngestServersOperation, TwitchIngests> twitch)
     {
         this.server = server;
     }
 
-    public async Task<Result<GetStreamsResponse>> Handle(GetStreamsOperation operation, CancellationToken cancellationToken)
+    public async Task<ApiResult<GetStreamsResponse>> Handle(GetStreamsOperation operation, CancellationToken cancellationToken)
     {
         var service = server.Services.GetRequiredService<IRtmpStreamManagerApiService>();
         return await service.GetStreamsAsync(operation.Parameter, cancellationToken);
@@ -27,7 +27,7 @@ internal sealed class GetStreamsOperationHandler : IOperationHandler<GetStreamsO
 
 public sealed record DeleteStreamOperation(string StreamId) : IOperation;
 
-internal sealed class DeleteStreamOperationHandler : IOperationHandler<DeleteStreamOperation>
+internal sealed class DeleteStreamOperationHandler : IApiOperationHandler<DeleteStreamOperation>
 {
     readonly IServer server;
 
@@ -36,7 +36,7 @@ internal sealed class DeleteStreamOperationHandler : IOperationHandler<DeleteStr
         this.server = server;
     }
 
-    public async Task<Result> Handle(DeleteStreamOperation operation, CancellationToken cancellationToken)
+    public async Task<ApiResult> Handle(DeleteStreamOperation operation, CancellationToken cancellationToken)
     {
         var service = server.Services.GetRequiredService<IRtmpStreamManagerApiService>();
         return await service.DeleteStreamAsync(operation.StreamId, cancellationToken);

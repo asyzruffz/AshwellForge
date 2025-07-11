@@ -15,7 +15,7 @@ internal class RtmpStreamManagerApiService : IRtmpStreamManagerApiService
         this.streamInfoManager = streamInfoManager;
     }
 
-    public Task<Result<GetStreamsResponse>> GetStreamsAsync(GetStreamsRequest request, CancellationToken cancellationToken)
+    public Task<ApiResult<GetStreamsResponse>> GetStreamsAsync(GetStreamsRequest request, CancellationToken cancellationToken)
     {
         var (page, pageSize, filter) = request;
 
@@ -33,24 +33,24 @@ internal class RtmpStreamManagerApiService : IRtmpStreamManagerApiService
             .Select(s => s.ToDto())
             .ToList();
 
-        return Task.FromResult(Result<GetStreamsResponse>.Ok(new GetStreamsResponse(result, totalCount)));
+        return Task.FromResult(ApiResult<GetStreamsResponse>.Ok(new GetStreamsResponse(result, totalCount)));
     }
 
-    public async Task<CustomResult<ApiError>> DeleteStreamAsync(string streamId, CancellationToken cancellationToken)
+    public async Task<ApiResult> DeleteStreamAsync(string streamId, CancellationToken cancellationToken)
     {
         var splitIndex = streamId.IndexOf('@');
 
         if (splitIndex == -1 || !uint.TryParse(streamId.Substring(0, splitIndex), out var clientId))
-            return CustomResult<ApiError>.Fail(ApiError.BadRequest("Invalid stream id format."));
+            return ApiResult.Fail(ApiError.BadRequest("Invalid stream id format."));
 
         var streamPath = streamId.Substring(splitIndex + 1);
         var stream = streamInfoManager.GetStreamInfo(streamPath);
 
         if (stream == null || stream.Publisher.Id != clientId)
-            return CustomResult<ApiError>.Fail(ApiError.NotFound($"Stream ({streamId}) not found."));
+            return ApiResult.Fail(ApiError.NotFound($"Stream ({streamId}) not found."));
 
         await stream.Publisher.DisconnectAsync(cancellationToken);
 
-        return CustomResult<ApiError>.Ok();
+        return ApiResult.Ok();
     }
 }

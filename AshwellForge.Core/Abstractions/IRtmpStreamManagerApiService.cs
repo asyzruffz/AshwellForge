@@ -5,6 +5,6 @@ namespace AshwellForge.Core.Abstractions;
 
 public interface IRtmpStreamManagerApiService
 {
-    Task<Result<GetStreamsResponse>> GetStreamsAsync(GetStreamsRequest request, CancellationToken cancellationToken);
-    Task<CustomResult<ApiError>> DeleteStreamAsync(string streamId, CancellationToken cancellationToken);
+    Task<ApiResult<GetStreamsResponse>> GetStreamsAsync(GetStreamsRequest request, CancellationToken cancellationToken);
+    Task<ApiResult> DeleteStreamAsync(string streamId, CancellationToken cancellationToken);
 }

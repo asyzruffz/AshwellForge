@@ -35,9 +35,9 @@ public static class Extensions
 
     static IServiceCollection AddStreamOperations(this IServiceCollection services)
     {
-        services.AddScoped<IOperationHandler<GetStreamsOperation, GetStreamsResponse>, GetStreamsOperationHandler>();
-        services.AddScoped<IOperationHandler<DeleteStreamOperation>, DeleteStreamOperationHandler>();
-        services.AddScoped<IOperationHandler<GetTwitchIngestServersOperation, TwitchIngests>, GetTwitchIngestServersOperationHandler>();
+        services.AddScoped<IApiOperationHandler<GetStreamsOperation, GetStreamsResponse>, GetStreamsOperationHandler>();
+        services.AddScoped<IApiOperationHandler<DeleteStreamOperation>, DeleteStreamOperationHandler>();
+        services.AddScoped<IApiOperationHandler<GetTwitchIngestServersOperation, TwitchIngests>, GetTwitchIngestServersOperationHandler>();
         return services;
     }
 }

@@ -5,5 +5,5 @@ namespace AshwellForge.Core.Abstractions;
 
 public interface ITwitchIngestService
 {
-    Task<Result<TwitchIngests>> GetIngestServers();
+    Task<ResultE<TwitchIngests, ApiError>> GetIngestServers();
 }
