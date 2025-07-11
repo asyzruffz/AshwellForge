@@ -13,7 +13,7 @@ internal sealed class GetStreamsOperationHandler : IApiOperationHandler<GetStrea
 {
     readonly IServer server;
 
-    public GetStreamsOperationHandler(IServer server, IOperationHandler<GetTwitchIngestServersOperation, TwitchIngests> twitch)
+    public GetStreamsOperationHandler(IServer server)
     {
         this.server = server;
     }
