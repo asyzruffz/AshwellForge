@@ -1,6 +1,8 @@
 ﻿@using AshwellForge.Admin.Models;
 @using AshwellForge.Admin.Services;
+@using AshwellForge.Admin.Utils
 @using Microsoft.Extensions.Options;
+@inject NavigationManager NavigationManager
 @inject IOptions<AshwellForgeSettings> Option
 
 <MudDataGrid T="StreamEntry" Items="@Entries" SortMode="SortMode.Single" Filterable="false" QuickFilter="@quickFilter"
@@ -30,7 +32,7 @@
         <TemplateColumn Resizable="false">
             <CellTemplate>
                 <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" AriaLabel="Open stream menu">
-                    <MudMenuItem Label="Preview" OnClick="@((e) => OnOpenPreview.InvokeAsync(context.Item.StreamPath))" />
+                    <MudMenuItem Label="Preview" OnClick="@((e) => OpenPreview(context.Item.StreamPath))" />
                     <MudMenuItem Class="py-0" AutoClose="false">
                         <ChildContent>
                             <div class="d-flex align-center">
@@ -57,9 +59,6 @@
 @code {
     [Inject]
     StreamsApi api { get; set; } = default!;
-
-    [Parameter]
-    public EventCallback<string> OnOpenPreview { get; set; }
 
     IEnumerable<StreamEntry> Entries = new List<StreamEntry>();
     string searchString = string.Empty;
@@ -114,5 +113,19 @@
     void SelectedItemsChanged(HashSet<StreamEntry> items)
     {
         //_events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    void OpenPreview(string streamPath)
+    {
+        if (streamPath.StartsWith('/'))
+        {
+            streamPath = streamPath.Substring(1);
+            //streamPath = new string(streamPath.Prepend('/').ToArray());
+        }
+
+        var parameters = UrlQueryString.Create().Set("StreamPath", streamPath).Build();
+
+        Console.WriteLine($"Previewing - /{streamPath}");
+        NavigationManager.NavigateTo($"/streams/preview{parameters}");
     }
 }

@@ -1,25 +1,7 @@
 ﻿@page "/streams"
-@using AshwellForge.Admin.Utils
-@inject NavigationManager NavigationManager
 
 <PageContainer Title="Streams">
     <PageContent>
-        <StreamDataGrid OnOpenPreview=@OpenPreview />
+        <StreamDataGrid />
     </PageContent>
 </PageContainer>
-
-@code {
-    void OpenPreview(string streamPath)
-    {
-        if (streamPath.StartsWith('/'))
-        {
-            streamPath = streamPath.Substring(1);
-            //streamPath = new string(streamPath.Prepend('/').ToArray());
-        }
-
-        var parameters = UrlQueryString.Create().Set("StreamPath", streamPath).Build();
-
-        Console.WriteLine($"Previewing - /{streamPath}");
-        NavigationManager.NavigateTo($"/streams/preview{parameters}");
-    }
-}

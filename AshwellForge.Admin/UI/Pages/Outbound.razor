@@ -1,55 +1,8 @@
 ﻿@page "/outbound"
-@using AshwellForge.Admin.Models
-@using AshwellForge.Admin.Services
 
 <PageContainer Title="Outbound">
     <PageContent>
         <MudText Class="mb-2" Typo="Typo.h6">Ingest Servers</MudText>
-        <MudPaper Width="100%" Class="pb-4">
-            <MudList T="string" Dense="true" Gutters="true">
-                <MudListSubheader Class="d-flex flex-grow-1 gap-2 align-center">
-                    <MudIcon Class="flex-none d-flex" Icon="@Icons.Material.Filled.FolderSpecial" Color="Color.Tertiary" />
-                    <MudText Class="flex-1 d-flex" Typo="Typo.body1">Saved</MudText>
-                    <MudIconButton Class="flex-none d-flex" Icon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@((e) => Refresh())" />
-                </MudListSubheader>
-                <MudListItem Text="Workstation - Home" Icon="@Icons.Material.Filled.BroadcastOnHome" IconColor="Color.Primary" />
-                <MudListItem Text="YouTube" Icon="@Icons.Material.Filled.BroadcastOnHome" IconColor="Color.Primary" />
-                <MudDivider Class="mt-4" />
-                <MudListSubheader Class="d-flex flex-grow-1 gap-2 align-center">
-                    <MudIcon Class="flex-none d-flex" Icon="@Icons.Material.Filled.ChatBubble" Color="Color.Tertiary" />
-                    <MudText Class="flex-1 d-flex" Typo="Typo.body1">Twitch</MudText>
-                    <MudIconButton Class="flex-none d-flex" Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" OnClick="@((e) => Refresh())" />
-                </MudListSubheader>
-                @if (Servers.Any())
-                {
-                    <MudListItem Text="@Servers.First().Name" Icon="@Icons.Material.Filled.BroadcastOnHome" IconColor="Color.Primary" />
-                    <MudListItem Text="Mirrors" Icon="@Icons.Material.Filled.KeyboardArrowRight">
-                        <NestedList>
-                            @foreach (var server in Servers.Skip(1))
-                            {
-                                <MudListItem Text="@server.Name" Icon="@Icons.Material.Filled.BroadcastOnHome" IconColor="Color.Primary" />
-                            }
-                        </NestedList>
-                    </MudListItem>
-                }
-            </MudList>
-        </MudPaper>
+        <IngestServerList />
     </PageContent>
 </PageContainer>
-
-@code {
-    [Inject]
-    StreamsApi api { get; set; } = default!;
-
-    IEnumerable<IngestServer> Servers = new List<IngestServer>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        Servers = await api.GetIngestServers();
-    }
-
-    async Task Refresh()
-    {
-        Servers = await api.GetIngestServers(true);
-    }
-}
