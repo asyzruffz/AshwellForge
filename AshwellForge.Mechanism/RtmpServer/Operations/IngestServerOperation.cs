@@ -5,7 +5,7 @@ using AshwellForge.Mechanism.Abstractions;
 
 namespace AshwellForge.Mechanism.RtmpServer.Operations;
 
-public sealed record GetIngestServersOperation(bool ForceRefresh = false) : IOperation<IEnumerable<IngestServer>>;
+public sealed record GetIngestServersOperation(GetIngestsParam Parameter) : IOperation<IEnumerable<IngestServer>>;
 
 internal sealed class GetIngestServersOperationHandler : IApiOperationHandler<GetIngestServersOperation, IEnumerable<IngestServer>>
 {
@@ -18,6 +18,14 @@ internal sealed class GetIngestServersOperationHandler : IApiOperationHandler<Ge
 
     public async Task<ApiResult<IEnumerable<IngestServer>>> Handle(GetIngestServersOperation operation, CancellationToken cancellationToken)
     {
-        return await service.GetIngestServers(operation.ForceRefresh, cancellationToken);
+        switch (operation.Parameter.Kind)
+        {
+            case IngestServerKind.Saved:
+                return await service.GetSavedIngestServers(cancellationToken);
+            case IngestServerKind.Twitch:
+                return await service.GetTwitchIngestServers(operation.Parameter.ForceRefresh, cancellationToken);
+            default:
+                return ApiResult<IEnumerable<IngestServer>>.Fail(ApiError.BadRequest("Invalid ingest server kind"));
+        }
     }
 }

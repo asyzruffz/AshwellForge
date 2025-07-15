@@ -48,9 +48,10 @@ public class StreamsApi
             .Select(StreamEntry.From);
     }
 
-    public async Task<IEnumerable<IngestServer>> GetIngestServers(bool forceRefresh = false)
+    public async Task<IEnumerable<IngestServer>> GetIngestServers(string kind, bool forceRefresh = false)
     {
         var requestParams = UrlQueryString.Create()
+            .Set("kind", kind)
             .Set("refresh", forceRefresh.ToString())
             .Build();
 

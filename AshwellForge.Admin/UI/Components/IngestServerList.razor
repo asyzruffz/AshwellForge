@@ -47,11 +47,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Servers = await api.GetIngestServers();
+        Servers = await api.GetIngestServers("Twitch");
     }
 
     async Task Refresh()
     {
-        Servers = await api.GetIngestServers(true);
+        Servers = await api.GetIngestServers("Twitch", true);
     }
 }

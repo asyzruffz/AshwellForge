@@ -15,9 +15,9 @@ internal class RtmpStreamManagerApiService : IRtmpStreamManagerApiService
         this.streamInfoManager = streamInfoManager;
     }
 
-    public Task<ApiResult<IEnumerable<VideoStream>>> GetStreamsAsync(GetStreamsRequest request, CancellationToken cancellationToken)
+    public Task<ApiResult<IEnumerable<VideoStream>>> GetStreamsAsync(GetStreamsRequest parameter, CancellationToken cancellationToken)
     {
-        var (page, pageSize, filter) = request;
+        var (page, pageSize, filter) = parameter;
 
         var streams = streamInfoManager.GetStreamInfos();
 

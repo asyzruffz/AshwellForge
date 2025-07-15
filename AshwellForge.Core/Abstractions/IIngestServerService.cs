@@ -5,5 +5,6 @@ namespace AshwellForge.Core.Abstractions;
 
 public interface IIngestServerService
 {
-    Task<ApiResult<IEnumerable<IngestServer>>> GetIngestServers(bool forceRefresh, CancellationToken cancellationToken);
+    Task<ApiResult<IEnumerable<IngestServer>>> GetSavedIngestServers(CancellationToken cancellationToken);
+    Task<ApiResult<IEnumerable<IngestServer>>> GetTwitchIngestServers(bool forceRefresh, CancellationToken cancellationToken);
 }

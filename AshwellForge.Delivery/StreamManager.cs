@@ -10,11 +10,11 @@ namespace AshwellForge.Delivery;
 internal static class StreamManager
 {
     public static async Task<IResult> GetStreams(
-        [AsParameters] GetStreamsRequest parameter,
+        [AsParameters] GetStreamsRequest request,
         [FromServices] IApiOperationHandler<GetStreamsOperation, IEnumerable<VideoStream>> handler,
         CancellationToken cancellationToken)
     {
-        var result = await handler.Handle(new GetStreamsOperation(parameter), cancellationToken);
+        var result = await handler.Handle(new GetStreamsOperation(request), cancellationToken);
         return result.ToHttpResult();
     }
 
@@ -28,11 +28,11 @@ internal static class StreamManager
     }
 
     public static async Task<IResult> GetIngestServers(
-        [AsParameters] bool refresh,
+        [AsParameters] GetIngestsRequest request,
         [FromServices] IApiOperationHandler<GetIngestServersOperation, IEnumerable<IngestServer>> handler,
         CancellationToken cancellationToken)
     {
-        var result = await handler.Handle(new GetIngestServersOperation(refresh), cancellationToken);
+        var result = await handler.Handle(new GetIngestServersOperation(request.ToParam()), cancellationToken);
         return result.ToHttpResult();
     }
 }
