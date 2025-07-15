@@ -1,6 +1,6 @@
-﻿using AshwellForge.Delivery.Utils;
+﻿using AshwellForge.Core.Utils;
+using AshwellForge.Delivery.Utils;
 using Microsoft.AspNetCore.Http;
-using System.Text.Json;
 
 namespace AshwellForge.Delivery;
 
@@ -12,9 +12,14 @@ public class ApiExceptionEndpointFilter : IEndpointFilter
         {
             return await next(context);
         }
-        catch (ApiException ex)
+        catch (Exception ex)
         {
-            return Results.Json(ex.ErrorResponse, (JsonSerializerOptions?)null, null, ex.StatusCode);
+#if DEBUG
+            var result = ApiResult.Fail(ApiError.Internal(ex.Message));
+#else
+            var result = ApiResult.Fail(ApiError.Internal("Unknown error"));
+#endif
+            return result.ToHttpResult();
         }
     }
 }

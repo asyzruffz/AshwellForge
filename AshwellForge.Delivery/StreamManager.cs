@@ -1,4 +1,5 @@
 ﻿using AshwellForge.Core.Data;
+using AshwellForge.Delivery.Utils;
 using AshwellForge.Mechanism.Abstractions;
 using AshwellForge.Mechanism.RtmpServer.Operations;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +15,7 @@ internal static class StreamManager
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(new GetStreamsOperation(parameter), cancellationToken);
-
-        return result.Match<IResult>(
-            onSuccess: TypedResults.Ok,
-            onFailure: err => TypedResults.InternalServerError(err.Message));
+        return result.ToHttpResult();
     }
 
     public static async Task<IResult> DeleteStream(
@@ -26,10 +24,7 @@ internal static class StreamManager
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(new DeleteStreamOperation(streamId), cancellationToken);
-
-        return result.Match(
-            onSuccess: TypedResults.Ok,
-            onFailure: err => Results.StatusCode(err.StatusCode));
+        return result.ToHttpResult();
     }
 
     public static async Task<IResult> GetIngestServers(
@@ -38,9 +33,6 @@ internal static class StreamManager
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(new GetIngestServersOperation(refresh), cancellationToken);
-
-        return result.Match<IResult>(
-            onSuccess: TypedResults.Ok,
-            onFailure: err => TypedResults.InternalServerError(err.Message));
+        return result.ToHttpResult();
     }
 }
