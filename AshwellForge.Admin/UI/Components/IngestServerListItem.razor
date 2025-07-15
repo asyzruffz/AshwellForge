@@ -1,0 +1,40 @@
+﻿@using AshwellForge.Admin.Models
+
+<MudMenu style="width: 100%" PositionAtCursor="true">
+    <ActivatorContent>
+        <div class="d-flex align-center" style="width: 100%">
+            <MudIcon Class="mr-8" Icon="@Icons.Material.Filled.BroadcastOnHome" Color="Color.Primary" />
+            <MudText Typo="Typo.body2">@Server.Name</MudText>
+        </div>
+    </ActivatorContent>
+    <ChildContent>
+        @if (Saveable)
+        {
+            <MudMenuItem Label="Save" />
+        }
+        <MudMenuItem>
+            <ChildContent>
+                <div class="d-flex align-center">
+                    <MudTextField Value="@Server.Url" Label="RTMP" ReadOnly="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                    <CopyToClipboardButton Text="@Server.Url" />
+                </div>
+            </ChildContent>
+        </MudMenuItem>
+        <MudMenuItem>
+            <ChildContent>
+                <div class="d-flex align-center">
+                    <MudTextField Value="@Server.UrlSecure" Label="Secure RTMP" ReadOnly="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                    <CopyToClipboardButton Text="@Server.UrlSecure" />
+                </div>
+            </ChildContent>
+        </MudMenuItem>
+    </ChildContent>
+</MudMenu>
+
+@code {
+    [Parameter]
+    public IngestServer Server { get; set; } = default!;
+
+    [Parameter]
+    public bool Saveable { get; set; } = false;
+}

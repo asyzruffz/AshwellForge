@@ -18,12 +18,20 @@
         </MudListSubheader>
         @if (Servers.Any())
         {
-            <MudListItem Text="@Servers.First().Name" Icon="@Icons.Material.Filled.BroadcastOnHome" IconColor="Color.Primary" />
+            <MudListItem Class="py-0">
+                <ChildContent>
+                    <IngestServerListItem Server="@Servers.First()" Saveable="true" />
+                </ChildContent>
+            </MudListItem>
             <MudListItem Text="Mirrors" Icon="@Icons.Material.Filled.KeyboardArrowRight">
                 <NestedList>
                     @foreach (var server in Servers.Skip(1))
                     {
-                        <MudListItem Text="@server.Name" Icon="@Icons.Material.Filled.BroadcastOnHome" IconColor="Color.Primary" />
+                        <MudListItem Class="py-0">
+                            <ChildContent>
+                                <IngestServerListItem Server="@server" Saveable="true" />
+                            </ChildContent>
+                        </MudListItem>
                     }
                 </NestedList>
             </MudListItem>
