@@ -1,11 +1,11 @@
-﻿using LiveStreamingServerNet.Rtmp.Server.Contracts;
-using Stream = AshwellForge.Core.Data.Stream;
+﻿using AshwellForge.Core.Data;
+using LiveStreamingServerNet.Rtmp.Server.Contracts;
 
 namespace AshwellForge.Mechanism.RtmpServer.Utils;
 
 public static class StreamInfoExtension
 {
-    public static Stream ToDto(this IRtmpStreamInfo stream)
+    public static VideoStream ToDto(this IRtmpStreamInfo stream)
     {
         int videoCodecId = 0;
         int height = 0;
@@ -30,7 +30,7 @@ public static class StreamInfoExtension
                 audioChannels = stereoValue ? 2 : 1;
         }
 
-        return new Stream
+        return new VideoStream
         {
             Id = $"{stream.Publisher.Id}@{stream.StreamPath}",
             ClientId = stream.Publisher.Id,

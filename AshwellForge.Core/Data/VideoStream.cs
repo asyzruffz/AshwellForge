@@ -1,6 +1,6 @@
 ﻿namespace AshwellForge.Core.Data;
 
-public class Stream
+public class VideoStream
 {
     public required string Id { get; set; }
     public required uint ClientId { get; set; }

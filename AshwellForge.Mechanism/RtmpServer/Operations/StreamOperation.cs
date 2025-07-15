@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AshwellForge.Mechanism.RtmpServer.Operations;
 
-public sealed record GetStreamsOperation(GetStreamsRequest Parameter) : IOperation<GetStreamsResponse>;
+public sealed record GetStreamsOperation(GetStreamsRequest Parameter) : IOperation<IEnumerable<VideoStream>>;
 
-internal sealed class GetStreamsOperationHandler : IApiOperationHandler<GetStreamsOperation, GetStreamsResponse>
+internal sealed class GetStreamsOperationHandler : IApiOperationHandler<GetStreamsOperation, IEnumerable<VideoStream>>
 {
     readonly IServer server;
 
@@ -18,7 +18,7 @@ internal sealed class GetStreamsOperationHandler : IApiOperationHandler<GetStrea
         this.server = server;
     }
 
-    public async Task<ApiResult<GetStreamsResponse>> Handle(GetStreamsOperation operation, CancellationToken cancellationToken)
+    public async Task<ApiResult<IEnumerable<VideoStream>>> Handle(GetStreamsOperation operation, CancellationToken cancellationToken)
     {
         var service = server.Services.GetRequiredService<IRtmpStreamManagerApiService>();
         return await service.GetStreamsAsync(operation.Parameter, cancellationToken);

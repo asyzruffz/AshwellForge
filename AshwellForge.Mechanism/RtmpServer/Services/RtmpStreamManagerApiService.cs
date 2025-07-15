@@ -15,7 +15,7 @@ internal class RtmpStreamManagerApiService : IRtmpStreamManagerApiService
         this.streamInfoManager = streamInfoManager;
     }
 
-    public Task<ApiResult<GetStreamsResponse>> GetStreamsAsync(GetStreamsRequest request, CancellationToken cancellationToken)
+    public Task<ApiResult<IEnumerable<VideoStream>>> GetStreamsAsync(GetStreamsRequest request, CancellationToken cancellationToken)
     {
         var (page, pageSize, filter) = request;
 
@@ -24,8 +24,6 @@ internal class RtmpStreamManagerApiService : IRtmpStreamManagerApiService
         if (!string.IsNullOrWhiteSpace(filter))
             streams = streams.Where(x => x.StreamPath.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
 
-        var totalCount = streams.Count();
-
         var result = streams
             .OrderByDescending(x => x.StartTime)
             .Skip(Math.Max(0, page - 1) * pageSize)
@@ -33,7 +31,7 @@ internal class RtmpStreamManagerApiService : IRtmpStreamManagerApiService
             .Select(s => s.ToDto())
             .ToList();
 
-        return Task.FromResult(ApiResult<GetStreamsResponse>.Ok(new GetStreamsResponse(result, totalCount)));
+        return Task.FromResult(ApiResult<IEnumerable<VideoStream>>.Ok(result));
     }
 
     public async Task<ApiResult> DeleteStreamAsync(string streamId, CancellationToken cancellationToken)

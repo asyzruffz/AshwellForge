@@ -19,9 +19,17 @@ public class StreamsApi
 
     public async Task<IEnumerable<StreamEntry>> GetStreams()
     {
-        var requestParams = new GetStreamsParam(1, 20, null);
+        int page = 1;
+        int pageSize = 20;
+        string? filter = null;
 
-        var response = await client.GetAsync($"{apiBase}/streams{requestParams.ForUri()}");
+        var requestParams = UrlQueryString.Create()
+            .Set("page", page.ToString())
+            .Set("pageSize", pageSize.ToString());
+        if (!string.IsNullOrEmpty(filter))
+            requestParams.Set("filter", filter);
+
+        var response = await client.GetAsync($"{apiBase}/streams{requestParams.Build()}");
 
         if (!response.IsSuccessStatusCode)
         {
@@ -29,14 +37,14 @@ public class StreamsApi
             return Enumerable.Empty<StreamEntry>();
         }
 
-        var streamsResponse = await response.Content.ReadFromJsonAsync<GetStreamsResponse>();
+        var streamsResponse = await response.Content.ReadFromJsonAsync<IEnumerable<VideoStream>>();
         if (streamsResponse is null)
         {
             Console.WriteLine("GetStreamsResponse cannot be made from json");
             return Enumerable.Empty<StreamEntry>();
         }
 
-        return streamsResponse.Streams
+        return streamsResponse
             .Select(StreamEntry.From);
     }
 

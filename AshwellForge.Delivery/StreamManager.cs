@@ -11,7 +11,7 @@ internal static class StreamManager
 {
     public static async Task<IResult> GetStreams(
         [AsParameters] GetStreamsRequest parameter,
-        [FromServices] IApiOperationHandler<GetStreamsOperation, GetStreamsResponse> handler,
+        [FromServices] IApiOperationHandler<GetStreamsOperation, IEnumerable<VideoStream>> handler,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(new GetStreamsOperation(parameter), cancellationToken);
