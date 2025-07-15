@@ -3,8 +3,6 @@ using System.Text.Json.Serialization;
 
 namespace AshwellForge.Core.Data;
 
-public record TwitchIngests(IEnumerable<TwitchIngest> Ingests);
-
 public class TwitchIngest
 {
     [JsonPropertyName("_id")]
@@ -26,3 +24,5 @@ public class TwitchIngest
         return sb.ToString();
     }
 }
+
+public record TwitchIngests(IEnumerable<TwitchIngest> Ingests);

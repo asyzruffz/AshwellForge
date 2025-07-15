@@ -5,9 +5,9 @@ using AshwellForge.Mechanism.Abstractions;
 
 namespace AshwellForge.Mechanism.Twitch.Operations;
 
-public sealed record GetTwitchIngestServersOperation : IOperation<TwitchIngests>;
+public sealed record GetTwitchIngestServersOperation : IOperation<IEnumerable<TwitchIngest>>;
 
-internal sealed class GetTwitchIngestServersOperationHandler : IApiOperationHandler<GetTwitchIngestServersOperation, TwitchIngests>
+internal sealed class GetTwitchIngestServersOperationHandler : IApiOperationHandler<GetTwitchIngestServersOperation, IEnumerable<TwitchIngest>>
 {
     readonly IAshwellForgeStorage storage;
     readonly ITwitchIngestService service;
@@ -18,12 +18,12 @@ internal sealed class GetTwitchIngestServersOperationHandler : IApiOperationHand
         service = ingestService;
     }
 
-    public async Task<ApiResult<TwitchIngests>> Handle(GetTwitchIngestServersOperation operation, CancellationToken cancellationToken)
+    public async Task<ApiResult<IEnumerable<TwitchIngest>>> Handle(GetTwitchIngestServersOperation operation, CancellationToken cancellationToken)
     {
         var result = await service.GetIngestServers();
-        result.Then(async twitch =>
+        result.Then(async ingests =>
         {
-            foreach (var server in twitch.Ingests)
+            foreach (var server in ingests)
             {
                 await storage.SaveIngestServer(IngestServer.FromTwitch(server));
             }

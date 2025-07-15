@@ -9,11 +9,11 @@ namespace AshwellForge.Mechanism.RtmpServer.Services;
 internal class IngestServerService : IIngestServerService
 {
     readonly IAshwellForgeStorage storage;
-    readonly IApiOperationHandler<GetTwitchIngestServersOperation, TwitchIngests> twitchOperation;
+    readonly IApiOperationHandler<GetTwitchIngestServersOperation, IEnumerable<TwitchIngest>> twitchOperation;
 
     public IngestServerService(
         IAshwellForgeStorage storage,
-        IApiOperationHandler<GetTwitchIngestServersOperation, TwitchIngests> twitchOperation)
+        IApiOperationHandler<GetTwitchIngestServersOperation, IEnumerable<TwitchIngest>> twitchOperation)
     {
         this.storage = storage;
         this.twitchOperation = twitchOperation;

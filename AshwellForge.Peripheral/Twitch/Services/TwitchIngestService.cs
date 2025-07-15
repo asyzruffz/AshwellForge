@@ -15,21 +15,21 @@ public class TwitchIngestService : ITwitchIngestService
         client.BaseAddress = new Uri("https://ingest.twitch.tv/ingests");
     }
 
-    public async Task<ApiResult<TwitchIngests>> GetIngestServers()
+    public async Task<ApiResult<IEnumerable<TwitchIngest>>> GetIngestServers()
     {
         var response = await client.GetAsync("");
 
         if (!response.IsSuccessStatusCode)
         {
-            return ApiResult<TwitchIngests>.Fail(new ApiError((int)response.StatusCode, "Fail connecting to Twitch"));
+            return ApiResult<IEnumerable<TwitchIngest>>.Fail(new ApiError((int)response.StatusCode, "Fail connecting to Twitch"));
         }
 
         var content = await response.Content.ReadFromJsonAsync<TwitchIngests>();
         if (content is null)
         {
-            return ApiResult<TwitchIngests>.Fail(ApiError.Internal("Fail json conversion to TwitchIngests"));
+            return ApiResult<IEnumerable<TwitchIngest>>.Fail(ApiError.Internal("Fail json conversion to TwitchIngests"));
         }
 
-        return ApiResult<TwitchIngests>.Ok(content!);
+        return ApiResult<IEnumerable<TwitchIngest>>.Ok(content!.Ingests);
     }
 }

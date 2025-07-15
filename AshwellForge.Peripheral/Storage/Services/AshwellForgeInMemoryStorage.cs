@@ -21,8 +21,9 @@ internal class AshwellForgeInMemoryStorage : IAshwellForgeStorage
     public Task SaveIngestServer(IngestServer server)
     {
         var existed = ingestServers
-            .Where(s => s.Name == server.Name || s.Url == server.Url)
-            .Select((s, i) => ingestServers[i] = server)
+            .Select((s, i) => (s, i))
+            .Where(e => e.s.Name == server.Name || e.s.Url == server.Url)
+            .Select(s => ingestServers[s.i] = server)
             .Any();
         if (!existed)
         {
