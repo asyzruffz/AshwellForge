@@ -41,7 +41,6 @@ internal static class StreamManager
         [FromServices] IApiOperationHandler<SaveIngestServerOperation> handler,
         CancellationToken cancellationToken)
     {
-        Console.WriteLine(server.ToString());
         var result = await handler.Handle(new SaveIngestServerOperation(server), cancellationToken);
         return result.ToHttpResult();
     }
