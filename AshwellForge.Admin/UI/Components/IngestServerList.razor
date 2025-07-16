@@ -1,11 +1,12 @@
-@using AshwellForge.Admin.Services
+﻿@using AshwellForge.Admin.Services
+@inject IDialogService DialogService
 
 <MudPaper Width="100%" Class="pb-4">
     <MudList T="string" Dense="true" Gutters="true">
         <MudListSubheader Class="d-flex flex-grow-1 gap-2 align-center">
             <MudIcon Class="flex-none d-flex" Icon="@Icons.Material.Filled.FolderSpecial" Color="Color.Tertiary" />
             <MudText Class="flex-1 d-flex" Typo="Typo.body1">Saved</MudText>
-            <MudIconButton Class="flex-none d-flex" Icon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@((e) => Refresh())" />
+            <MudIconButton Class="flex-none d-flex" Icon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@((e) => OpenNewServerDialog())" />
         </MudListSubheader>
         @foreach (var server in SavedServers)
         {
@@ -66,5 +67,22 @@
     {
         await api.SaveIngestServer(server);
         ((List<IngestServer>)SavedServers).Add(server);
+    }
+
+    async Task OpenNewServerDialog()
+    {
+        var parameters = new DialogParameters<NewIngestServerDialog>
+        {
+            { x => x.OnSave, s => _ = SaveServer(s) }
+        };
+        var options = new DialogOptions
+        {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true,
+            CloseButton = true,
+            BackdropClick = false,
+        };
+
+        await DialogService.ShowAsync<NewIngestServerDialog>("Add Ingest Server", parameters, options);
     }
 }

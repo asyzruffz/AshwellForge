@@ -10,7 +10,7 @@
         {
             <MudMenuItem Label="Save" OnClick="@((e) => OnSave.InvokeAsync(Server))" />
         }
-        <MudMenuItem>
+        <MudMenuItem AutoClose="false">
             <ChildContent>
                 <div class="d-flex align-center">
                     <MudTextField Value="@Server.Url" Label="RTMP" ReadOnly="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
@@ -18,7 +18,7 @@
                 </div>
             </ChildContent>
         </MudMenuItem>
-        <MudMenuItem>
+        <MudMenuItem AutoClose="false">
             <ChildContent>
                 <div class="d-flex align-center">
                     <MudTextField Value="@Server.UrlSecure" Label="Secure RTMP" ReadOnly="true" Variant="Variant.Outlined" Margin="Margin.Dense" />

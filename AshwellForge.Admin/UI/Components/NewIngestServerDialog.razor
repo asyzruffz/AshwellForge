@@ -1,0 +1,28 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudTextField Label="Name" @bind-Value="ServerName" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <MudTextField Label="RTMP Path" @bind-Value="RtmpPath" Placeholder="rtmp://" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <MudTextField Label="Secure RTMP Path (optional)" @bind-Value="SecureRtmpPath" Placeholder="rtmps://" Variant="Variant.Outlined" Margin="Margin.Dense" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public Action<IngestServer>? OnSave { get; set; }
+
+    string ServerName { get; set; } = string.Empty;
+    string RtmpPath { get; set; } = string.Empty;
+    string SecureRtmpPath { get; set; } = string.Empty;
+
+    void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+        OnSave?.Invoke(new IngestServer(ServerName, RtmpPath, SecureRtmpPath));
+    }
+}
