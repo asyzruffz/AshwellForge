@@ -72,4 +72,9 @@ public class StreamsApi
 
         return ingestsResponse;
     }
+
+    public async Task SaveIngestServer(IngestServer server)
+    {
+        await client.PostAsJsonAsync($"{apiBase}/ingests", server);
+    }
 }

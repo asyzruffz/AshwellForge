@@ -7,4 +7,5 @@ public interface IIngestServerService
 {
     Task<ApiResult<IEnumerable<IngestServer>>> GetSavedIngestServers(CancellationToken cancellationToken);
     Task<ApiResult<IEnumerable<IngestServer>>> GetTwitchIngestServers(bool forceRefresh, CancellationToken cancellationToken);
+    Task<ApiResult> SaveIngestServer(IngestServer server, CancellationToken cancellationToken);
 }

@@ -8,28 +8,34 @@
             <MudText Class="flex-1 d-flex" Typo="Typo.body1">Saved</MudText>
             <MudIconButton Class="flex-none d-flex" Icon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@((e) => Refresh())" />
         </MudListSubheader>
-        <MudListItem Text="Workstation - Home" Icon="@Icons.Material.Filled.BroadcastOnHome" IconColor="Color.Primary" />
-        <MudListItem Text="YouTube" Icon="@Icons.Material.Filled.BroadcastOnHome" IconColor="Color.Primary" />
+        @foreach (var server in SavedServers)
+        {
+            <MudListItem Class="py-0">
+                <ChildContent>
+                    <IngestServerListItem Server="@server" Saveable="false" />
+                </ChildContent>
+            </MudListItem>
+        }
         <MudDivider Class="mt-4" />
         <MudListSubheader Class="d-flex flex-grow-1 gap-2 align-center">
             <MudIcon Class="flex-none d-flex" Icon="@Icons.Material.Filled.ChatBubble" Color="Color.Tertiary" />
             <MudText Class="flex-1 d-flex" Typo="Typo.body1">Twitch</MudText>
             <MudIconButton Class="flex-none d-flex" Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" OnClick="@((e) => Refresh())" />
         </MudListSubheader>
-        @if (Servers.Any())
+        @if (TwitchServers.Any())
         {
             <MudListItem Class="py-0">
                 <ChildContent>
-                    <IngestServerListItem Server="@Servers.First()" Saveable="true" />
+                    <IngestServerListItem Server="@TwitchServers.First()" Saveable="true" OnSave="SaveServer" />
                 </ChildContent>
             </MudListItem>
             <MudListItem Text="Mirrors" Icon="@Icons.Material.Filled.KeyboardArrowRight">
                 <NestedList>
-                    @foreach (var server in Servers.Skip(1))
+                    @foreach (var server in TwitchServers.Skip(1))
                     {
                         <MudListItem Class="py-0">
                             <ChildContent>
-                                <IngestServerListItem Server="@server" Saveable="true" />
+                                <IngestServerListItem Server="@server" Saveable="true" OnSave="SaveServer" />
                             </ChildContent>
                         </MudListItem>
                     }
@@ -43,15 +49,23 @@
     [Inject]
     StreamsApi api { get; set; } = default!;
 
-    IEnumerable<IngestServer> Servers = new List<IngestServer>();
+    IEnumerable<IngestServer> SavedServers = new List<IngestServer>();
+    IEnumerable<IngestServer> TwitchServers = new List<IngestServer>();
 
     protected override async Task OnInitializedAsync()
     {
-        Servers = await api.GetIngestServers("Twitch");
+        TwitchServers = await api.GetIngestServers("Twitch");
+        SavedServers = await api.GetIngestServers("Saved");
     }
 
     async Task Refresh()
     {
-        Servers = await api.GetIngestServers("Twitch", true);
+        TwitchServers = await api.GetIngestServers("Twitch", true);
+    }
+
+    async Task SaveServer(IngestServer server)
+    {
+        await api.SaveIngestServer(server);
+        ((List<IngestServer>)SavedServers).Add(server);
     }
 }

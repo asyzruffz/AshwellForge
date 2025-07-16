@@ -45,6 +45,7 @@ public static class Extensions
         services.AddScoped<IApiOperationHandler<DeleteStreamOperation>, DeleteStreamOperationHandler>();
         services.AddScoped<IApiOperationHandler<GetTwitchIngestServersOperation, IEnumerable<TwitchIngest>>, GetTwitchIngestServersOperationHandler>();
         services.AddScoped<IApiOperationHandler<GetIngestServersOperation, IEnumerable<IngestServer>>, GetIngestServersOperationHandler>();
+        services.AddScoped<IApiOperationHandler<SaveIngestServerOperation>, SaveIngestServerOperationHandler>();
         return services;
     }
 }

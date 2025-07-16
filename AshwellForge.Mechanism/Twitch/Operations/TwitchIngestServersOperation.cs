@@ -25,7 +25,7 @@ internal sealed class GetTwitchIngestServersOperationHandler : IApiOperationHand
         {
             foreach (var server in ingests)
             {
-                await storage.SaveIngestServer(IngestServer.FromTwitch(server));
+                await storage.SaveTwitchServer(IngestServer.FromTwitch(server));
             }
         });
         return result;

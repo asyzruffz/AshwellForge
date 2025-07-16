@@ -5,35 +5,43 @@ namespace AshwellForge.Peripheral.Storage.Services;
 
 internal class AshwellForgeInMemoryStorage : IAshwellForgeStorage
 {
-    readonly List<IngestServer> ingestServers = new();
+    readonly List<IngestServer> savedServers = new();
+    readonly List<IngestServer> twitchServers = new();
 
-    public Task<bool> HasIngestServers()
+    public Task<bool> HasTwitchServers()
     {
-        return Task.FromResult(ingestServers.Any());
+        return Task.FromResult(twitchServers.Any());
     }
 
     public Task ClearIngestServers()
     {
-        ingestServers.Clear();
+        savedServers.Clear();
         return Task.CompletedTask;
     }
 
     public Task SaveIngestServer(IngestServer server)
     {
-        var existed = ingestServers
+        savedServers.Add(server);
+        return Task.CompletedTask;
+    }
+
+    public Task SaveTwitchServer(IngestServer server)
+    {
+        var existed = twitchServers
             .Select((s, i) => (s, i))
             .Where(e => e.s.Name == server.Name || e.s.Url == server.Url)
-            .Select(s => ingestServers[s.i] = server)
+            .Select(s => twitchServers[s.i] = server)
             .Any();
         if (!existed)
         {
-            ingestServers.Add(server);
+            twitchServers.Add(server);
         }
         return Task.CompletedTask;
     }
 
-    public Task<IEnumerable<IngestServer>> GetIngestServers()
-    {
-        return Task.FromResult<IEnumerable<IngestServer>>(ingestServers);
-    }
+    public Task<IEnumerable<IngestServer>> GetSavedIngestServers() =>
+        Task.FromResult<IEnumerable<IngestServer>>(savedServers);
+
+    public Task<IEnumerable<IngestServer>> GetTwitchIngestServers() =>
+        Task.FromResult<IEnumerable<IngestServer>>(twitchServers);
 }

@@ -10,7 +10,7 @@
     <ChildContent>
         @if (Saveable)
         {
-            <MudMenuItem Label="Save" />
+            <MudMenuItem Label="Save" OnClick="@((e) => OnSave.InvokeAsync(Server))" />
         }
         <MudMenuItem>
             <ChildContent>
@@ -37,4 +37,7 @@
 
     [Parameter]
     public bool Saveable { get; set; } = false;
+    
+    [Parameter]
+    public EventCallback<IngestServer> OnSave { get; set; }
 }

@@ -35,4 +35,14 @@ internal static class StreamManager
         var result = await handler.Handle(new GetIngestServersOperation(request.ToParam()), cancellationToken);
         return result.ToHttpResult();
     }
+
+    public static async Task<IResult> SaveIngestServer(
+        [FromBody] IngestServer server,
+        [FromServices] IApiOperationHandler<SaveIngestServerOperation> handler,
+        CancellationToken cancellationToken)
+    {
+        Console.WriteLine(server.ToString());
+        var result = await handler.Handle(new SaveIngestServerOperation(server), cancellationToken);
+        return result.ToHttpResult();
+    }
 }

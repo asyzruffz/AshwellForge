@@ -29,3 +29,20 @@ internal sealed class GetIngestServersOperationHandler : IApiOperationHandler<Ge
         }
     }
 }
+
+public sealed record SaveIngestServerOperation(IngestServer Server) : IOperation;
+
+internal sealed class SaveIngestServerOperationHandler : IApiOperationHandler<SaveIngestServerOperation>
+{
+    readonly IIngestServerService service;
+
+    public SaveIngestServerOperationHandler(IIngestServerService service)
+    {
+        this.service = service;
+    }
+
+    public async Task<ApiResult> Handle(SaveIngestServerOperation operation, CancellationToken cancellationToken)
+    {
+        return await service.SaveIngestServer(operation.Server, cancellationToken);
+    }
+}
