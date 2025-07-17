@@ -11,7 +11,8 @@
         <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         <MudSpacer />
-        <MudIconButton Class="ml-2" Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" OnClick="@((e) => Refresh())" />
+        <MudIconButton Class="ml-2" Icon="@Icons.Material.Filled.AddToQueue" Color="Color.Primary" OnClick="@((e) => Refresh())" />
+        <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Primary" OnClick="@((e) => Refresh())" />
     </ToolBarContent>
     <Columns>
         <TemplateColumn Title="Stream Path" Resizable="true">
