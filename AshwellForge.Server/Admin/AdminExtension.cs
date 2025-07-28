@@ -9,6 +9,7 @@ internal static class AdminExtension
     {
         services.AddRazorComponents()
             .AddInteractiveWebAssemblyComponents();
+        services.AddEndpoints();
         return services;
     }
 
