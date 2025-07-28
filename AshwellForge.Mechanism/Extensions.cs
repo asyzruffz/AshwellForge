@@ -19,7 +19,7 @@ public static class Extensions
             new IPEndPoint(IPAddress.Any, port),
             conf =>
             {
-                conf.Services.AddSingleton<IRtmpStreamManagerApiService, RtmpStreamManagerApiService>();
+                conf.Services.AddSingleton<IStreamManagerApiService, StreamManagerApiService>();
                 conf.AddFlv();
             });
 

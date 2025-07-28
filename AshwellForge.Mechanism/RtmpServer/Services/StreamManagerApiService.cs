@@ -6,11 +6,11 @@ using LiveStreamingServerNet.Rtmp.Server.Contracts;
 
 namespace AshwellForge.Mechanism.RtmpServer.Services;
 
-internal class RtmpStreamManagerApiService : IRtmpStreamManagerApiService
+internal class StreamManagerApiService : IStreamManagerApiService
 {
     private readonly IRtmpStreamInfoManager streamInfoManager;
 
-    public RtmpStreamManagerApiService(IRtmpStreamInfoManager streamInfoManager)
+    public StreamManagerApiService(IRtmpStreamInfoManager streamInfoManager)
     {
         this.streamInfoManager = streamInfoManager;
     }

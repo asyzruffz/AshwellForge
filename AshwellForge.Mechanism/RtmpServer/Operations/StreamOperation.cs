@@ -20,7 +20,7 @@ internal sealed class GetStreamsOperationHandler : IApiOperationHandler<GetStrea
 
     public async Task<ApiResult<IEnumerable<VideoStream>>> Handle(GetStreamsOperation operation, CancellationToken cancellationToken)
     {
-        var service = server.Services.GetRequiredService<IRtmpStreamManagerApiService>();
+        var service = server.Services.GetRequiredService<IStreamManagerApiService>();
         return await service.GetStreamsAsync(operation.Parameter, cancellationToken);
     }
 }
@@ -38,7 +38,7 @@ internal sealed class DeleteStreamOperationHandler : IApiOperationHandler<Delete
 
     public async Task<ApiResult> Handle(DeleteStreamOperation operation, CancellationToken cancellationToken)
     {
-        var service = server.Services.GetRequiredService<IRtmpStreamManagerApiService>();
+        var service = server.Services.GetRequiredService<IStreamManagerApiService>();
         return await service.DeleteStreamAsync(operation.StreamId, cancellationToken);
     }
 }
