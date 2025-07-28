@@ -1,9 +1,5 @@
-﻿using AshwellForge.Core.Abstractions;
-using AshwellForge.Core.Data;
-using AshwellForge.Mechanism.Abstractions;
-using AshwellForge.Mechanism.RtmpServer.Operations;
-using AshwellForge.Mechanism.RtmpServer.Services;
-using AshwellForge.Mechanism.Twitch.Operations;
+﻿using AshwellForge.Mechanism.RtmpServer;
+using AshwellForge.Mechanism.Twitch;
 using LiveStreamingServerNet;
 using LiveStreamingServerNet.Flv.Installer;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,35 +13,20 @@ public static class Extensions
     {
         services.AddLiveStreamingServer(
             new IPEndPoint(IPAddress.Any, port),
-            conf =>
-            {
-                conf.Services.AddSingleton<IStreamManagerApiService, StreamManagerApiService>();
-                conf.AddFlv();
-            });
+            conf => conf
+                .AddStreamManagerApi()
+                .AddFlv());
 
         return services;
     }
 
     public static IServiceCollection AddMechanism(this IServiceCollection services)
     {
-        services.AddServices();
-        services.AddOperations();
-        return services;
-    }
+        services.AddServerServices();
+        services.AddServerOperations();
 
-    static IServiceCollection AddServices(this IServiceCollection services)
-    {
-        services.AddScoped<IIngestServerService, IngestServerService>();
-        return services;
-    }
-
-    static IServiceCollection AddOperations(this IServiceCollection services)
-    {
-        services.AddScoped<IApiOperationHandler<GetStreamsOperation, IEnumerable<VideoStream>>, GetStreamsOperationHandler>();
-        services.AddScoped<IApiOperationHandler<DeleteStreamOperation>, DeleteStreamOperationHandler>();
-        services.AddScoped<IApiOperationHandler<GetTwitchIngestServersOperation, IEnumerable<TwitchIngest>>, GetTwitchIngestServersOperationHandler>();
-        services.AddScoped<IApiOperationHandler<GetIngestServersOperation, IEnumerable<IngestServer>>, GetIngestServersOperationHandler>();
-        services.AddScoped<IApiOperationHandler<SaveIngestServerOperation>, SaveIngestServerOperationHandler>();
+        services.AddTwitchServices();
+        services.AddTwitchOperations();
         return services;
     }
 }
