@@ -7,9 +7,9 @@ public interface IOperationHandler<in TOperation> where TOperation : IOperation
     ValueTask<Result> Handle(TOperation operation, CancellationToken cancellationToken);
 }
 
-public interface IOperationHandler<in TOperation, TRespond> where TOperation : IOperation<TRespond>
+public interface IOperationHandler<in TOperation, TResponse> where TOperation : IOperation<TResponse>
 {
-    ValueTask<Result<TRespond>> Handle(TOperation operation, CancellationToken cancellationToken);
+    ValueTask<Result<TResponse>> Handle(TOperation operation, CancellationToken cancellationToken);
 }
 
 public interface IApiOperationHandler<in TOperation> where TOperation : IOperation
@@ -17,7 +17,7 @@ public interface IApiOperationHandler<in TOperation> where TOperation : IOperati
     ValueTask<ApiResult> Handle(TOperation operation, CancellationToken cancellationToken);
 }
 
-public interface IApiOperationHandler<in TOperation, TRespond> where TOperation : IOperation<TRespond>
+public interface IApiOperationHandler<in TOperation, TResponse> where TOperation : IOperation<TResponse>
 {
-    ValueTask<ApiResult<TRespond>> Handle(TOperation operation, CancellationToken cancellationToken);
+    ValueTask<ApiResult<TResponse>> Handle(TOperation operation, CancellationToken cancellationToken);
 }
