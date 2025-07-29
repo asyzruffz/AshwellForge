@@ -16,7 +16,7 @@ internal sealed class GetIngestServersOperationHandler : IApiOperationHandler<Ge
         this.service = service;
     }
 
-    public async Task<ApiResult<IEnumerable<IngestServer>>> Handle(GetIngestServersOperation operation, CancellationToken cancellationToken)
+    public async ValueTask<ApiResult<IEnumerable<IngestServer>>> Handle(GetIngestServersOperation operation, CancellationToken cancellationToken)
     {
         switch (operation.Parameter.Kind)
         {
@@ -41,7 +41,7 @@ internal sealed class SaveIngestServerOperationHandler : IApiOperationHandler<Sa
         this.service = service;
     }
 
-    public async Task<ApiResult> Handle(SaveIngestServerOperation operation, CancellationToken cancellationToken)
+    public async ValueTask<ApiResult> Handle(SaveIngestServerOperation operation, CancellationToken cancellationToken)
     {
         return await service.SaveIngestServer(operation.Server, cancellationToken);
     }

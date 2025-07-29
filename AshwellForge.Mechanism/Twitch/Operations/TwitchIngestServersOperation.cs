@@ -18,7 +18,7 @@ internal sealed class GetTwitchIngestServersOperationHandler : IApiOperationHand
         service = ingestService;
     }
 
-    public async Task<ApiResult<IEnumerable<TwitchIngest>>> Handle(GetTwitchIngestServersOperation operation, CancellationToken cancellationToken)
+    public async ValueTask<ApiResult<IEnumerable<TwitchIngest>>> Handle(GetTwitchIngestServersOperation operation, CancellationToken cancellationToken)
     {
         var result = await service.GetIngestServers();
         result.Then(async ingests =>
