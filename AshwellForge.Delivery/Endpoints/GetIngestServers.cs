@@ -20,10 +20,10 @@ internal class GetIngestServers : IEndpoint
 
     async Task<IResult> Execute(
         [AsParameters] GetIngestsRequest request,
-        [FromServices] IApiOperationHandler<GetIngestServersOperation, IEnumerable<IngestServer>> handler,
+        [FromServices] IApiSender sender,
         CancellationToken cancellationToken)
     {
-        var result = await handler.Handle(new GetIngestServersOperation(request.ToParam()), cancellationToken);
+        var result = await sender.Send<GetIngestServersOperation, IEnumerable<IngestServer>>(new GetIngestServersOperation(request.ToParam()), cancellationToken);
         return result.ToHttpResult();
     }
 }

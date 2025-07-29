@@ -19,10 +19,10 @@ internal class DeleteStream : IEndpoint
 
     async Task<IResult> Execute(
         [FromQuery] string streamId,
-        [FromServices] IApiOperationHandler<DeleteStreamOperation> handler,
+        [FromServices] IApiSender sender,
         CancellationToken cancellationToken)
     {
-        var result = await handler.Handle(new DeleteStreamOperation(streamId), cancellationToken);
+        var result = await sender.Send(new DeleteStreamOperation(streamId), cancellationToken);
         return result.ToHttpResult();
     }
 }

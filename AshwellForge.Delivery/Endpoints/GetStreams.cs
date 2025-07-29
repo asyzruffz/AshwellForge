@@ -20,10 +20,10 @@ internal class GetStreams : IEndpoint
 
     async Task<IResult> Execute(
         [AsParameters] GetStreamsRequest request,
-        [FromServices] IApiOperationHandler<GetStreamsOperation, IEnumerable<VideoStream>> handler,
+        [FromServices] IApiSender sender,
         CancellationToken cancellationToken)
     {
-        var result = await handler.Handle(new GetStreamsOperation(request), cancellationToken);
+        var result = await sender.Send<GetStreamsOperation, IEnumerable<VideoStream>>(new GetStreamsOperation(request), cancellationToken);
         return result.ToHttpResult();
     }
 }

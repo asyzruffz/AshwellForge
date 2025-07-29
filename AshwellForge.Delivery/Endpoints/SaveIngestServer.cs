@@ -20,10 +20,10 @@ internal class SaveIngestServer : IEndpoint
 
     async Task<IResult> Execute(
         [FromBody] IngestServer server,
-        [FromServices] IApiOperationHandler<SaveIngestServerOperation> handler,
+        [FromServices] IApiSender sender,
         CancellationToken cancellationToken)
     {
-        var result = await handler.Handle(new SaveIngestServerOperation(server), cancellationToken);
+        var result = await sender.Send(new SaveIngestServerOperation(server), cancellationToken);
         return result.ToHttpResult();
     }
 }
