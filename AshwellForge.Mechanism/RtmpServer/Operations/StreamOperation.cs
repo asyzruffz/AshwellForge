@@ -42,3 +42,20 @@ internal sealed class DeleteStreamOperationHandler : IApiOperationHandler<Delete
         return await service.DeleteStreamAsync(operation.StreamId, cancellationToken);
     }
 }
+
+public sealed record PublishStreamOperation(string Endpoint, string StreamKey) : IOperation;
+
+public class PublishStreamOperationHandler : IApiOperationHandler<PublishStreamOperation>
+{
+    readonly IStreamManagerApiService service;
+
+    public PublishStreamOperationHandler(IStreamManagerApiService streamManagerApiService)
+    {
+        service = streamManagerApiService;
+    }
+
+    public async ValueTask<ApiResult> Handle(PublishStreamOperation operation, CancellationToken cancellationToken)
+    {
+        return await service.PublishStreamAsync(operation.Endpoint, cancellationToken);
+    }
+}

@@ -51,4 +51,10 @@ internal class StreamManagerApiService : IStreamManagerApiService
 
         return ApiResult.Ok();
     }
+
+    public Task<ApiResult> PublishStreamAsync(string url, CancellationToken cancellationToken)
+    {
+        // TODO: Implement stream publishing logic
+        return Task.FromResult(ApiResult.Fail(ApiError.Internal("Not implemented.")));
+    }
 }
