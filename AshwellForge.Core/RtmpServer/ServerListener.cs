@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace AshwellForge.Core.RtmpServer;
 
-internal record ServerListener(TcpListener TcpListener, ServerEndPoint ServerEndPoint) : ITcpListener
+internal record ServerListener(TcpListener TcpListener, StreamEndPoint ServerEndPoint) : ITcpListener
 {
     public EndPoint LocalEndpoint => TcpListener.LocalEndpoint;
 

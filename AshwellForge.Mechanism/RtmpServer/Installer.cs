@@ -18,9 +18,15 @@ internal static class Installer
 {
     public static IServiceCollection AddLiveStreamingServer(this IServiceCollection services, int port)
     {
-        IEnumerable<ServerEndPoint> serverEndPoints = [new IPEndPoint(IPAddress.Any, port)];
+        IEnumerable<StreamEndPoint> serverEndPoints = [new IPEndPoint(IPAddress.Any, port)];
 
-        services.AddSingleton<IServerLogger, ServerLogger>();
+        services.AddSingleton<IStreamSessionService, StreamSessionService>();
+        //services.AddSingleton<IServerEventDispatcher, >();
+
+        //services.AddScoped<IStreamSession, >();
+        //services.AddScoped<IClientSessionManager, >();
+        //services.AddScoped<IStreamEventDispatcher, >();
+        services.AddScoped<IStreamLogger, StreamLogger>();
 
         services.AddRtmpServer(
             conf => conf
@@ -28,8 +34,6 @@ internal static class Installer
                 .AddFlv(),
             null);
 
-        services.AddHostedService((IServiceProvider svc) =>
-            ActivatorUtilities.CreateInstance<LiveStreamServerRunner>(svc, [serverEndPoints.ToList()] ));
         return services;
     }
 

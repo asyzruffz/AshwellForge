@@ -1,16 +1,10 @@
 ﻿namespace AshwellForge.Core.RtmpServer;
 
-internal interface IServerEventDispatcher
+public interface IServerEventDispatcher
 {
-    Task ListenerCreatedAsync(ITcpListener tcpListener);
-
-    Task ClientAcceptedAsync(ITcpClient tcpClient);
-
-    Task ClientConnectedAsync(ISessionHandle client);
-
-    Task ClientDisconnectedAsync(ISessionInfo client);
-
     Task ServerStartedAsync();
-
     Task ServerStoppedAsync();
+
+    Task StreamSessionStartedAsync(Guid id);
+    Task StreamSessionStoppedAsync(Guid id);
 }

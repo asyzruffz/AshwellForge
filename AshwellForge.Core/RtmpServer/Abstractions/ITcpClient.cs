@@ -3,7 +3,7 @@ using Stream = System.IO.Stream;
 
 namespace AshwellForge.Core.RtmpServer;
 
-internal interface ITcpClient : IClientConnection, IDisposable
+public interface ITcpClient : IClientConnection, IDisposable
 {
     void Close();
     Socket Client { get; }

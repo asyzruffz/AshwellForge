@@ -2,7 +2,7 @@
 
 namespace AshwellForge.Core.RtmpServer;
 
-internal interface ITcpListener
+public interface ITcpListener
 {
     EndPoint LocalEndpoint { get; }
 
